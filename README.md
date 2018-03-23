@@ -15,3 +15,5 @@ real estate company with H2 SQL database integration.
 We will most likely use JavaFX since we all know sufficiently how to use it even
 though the sceneBuilder can be a pain. I mean, we could make a text based UI,
 but even though it would be easy... 
+
+How to do stuff: https://www.youtube.com/watch?time_continue=351&v=1eedQuB4v6Y
