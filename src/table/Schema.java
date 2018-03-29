@@ -11,6 +11,7 @@ public class Schema
 	private ArrayList<Appointment> appointments;
 	
 	public Schema(){
+		load();
 		//create schema here
 	}
 	
