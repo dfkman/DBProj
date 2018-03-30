@@ -14,21 +14,20 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
-public class TEController
-{
+public class TEController {
 	@FXML 
 	private Button Ba;
 	private Main model;
 	
 	
 	
-	public TEController(Main mod){
+	public TEController(Main mod) {
 		model = mod;
 		
 	}
 	
 	@FXML
-	private void initialize(){
+	private void initialize() {
 		
 	}
 }

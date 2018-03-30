@@ -14,8 +14,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
-public class MMController
-{
+
+public class MMController {
 	@FXML 
 	private Button Emp;
 	@FXML
@@ -32,71 +32,59 @@ public class MMController
 	
 
 	
-	public MMController(Main mod){
+	public MMController(Main mod) {
 		model = mod;
 	}
 	
 	@FXML
 	private void initialize(){	
-		Emp.setOnAction((event) ->{
-			try
-			{
+		Emp.setOnAction((event) -> {
+			try {
 				model.swapScene('e');
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			};
 		});
-		Cust.setOnAction((event) ->{
-			try
-			{
+		Cust.setOnAction((event) -> {
+			try {
 				model.swapScene('c');
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			};
+			}
 		});
-		Prop.setOnAction((event) ->{
-			try
-			{
+		Prop.setOnAction((event) -> {
+			try {
 				model.swapScene('p');
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			};
+			}
 		});
-		Sale.setOnAction((event) ->{
-			try
-			{
+		Sale.setOnAction((event) -> {
+			try {
 				model.swapScene('s');
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			};
+			}
 		});
-		Apt.setOnAction((event) ->{
-			try
-			{
+		Apt.setOnAction((event) -> {
+			try {
 				model.swapScene('a');
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			};
+			}
 		});
-		Exit.setOnAction((event) ->{
-			try
-			{
+		Exit.setOnAction((event) -> {
+			try {
 				model.swapScene('q');
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			};
+			}
 		});
 	}
 }
