@@ -28,7 +28,16 @@ public class TEController
 	}
 	
 	@FXML
-	private void initialize(){
-		
+	private void initialize() throws IOException{
+		Ba.setOnAction(event ->{
+			try
+			{
+				model.swapScene('m');
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 }
