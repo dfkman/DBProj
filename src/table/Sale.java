@@ -1,7 +1,6 @@
 package table;
 
-public class Sale
-{
+public class Sale {
 	Employee seller;
 	Customer buyer;
 	Property prop;
@@ -10,7 +9,8 @@ public class Sale
 	float price;
 	boolean isEdited;
 	
-	public Sale(Employee sell, Customer buy, Property prop, String ref, String date, float price){
+	public Sale(Employee sell, Customer buy, Property prop, String ref,
+				String date, float price) {
 		this.seller = sell;
 		this.buyer = buy;
 		this.prop = prop;
@@ -20,7 +20,7 @@ public class Sale
 		this.isEdited = false;
 	}
 	
-	public void saveToTable(){
+	public void saveToTable() {
 		//save function for going back to sql
 		isEdited = false;
 	}

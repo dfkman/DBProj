@@ -35,7 +35,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        /*
         try {
             Class.forName("org.h2.Driver");
             // "jdbc:h2:~/{name of the database}", "username", "password"
@@ -43,20 +42,20 @@ public class Main extends Application {
                     "test", "test");
             Statement st = conn.createStatement();
             st.execute("create table pawn(name varchar(20))");
+            //st.execute("drop table pawn");
             System.out.println("table created successfully");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        */
         launch(args);
     }
     
-    public void swapScene(char sceneabbr) throws IOException{
+    public void swapScene(char sceneabbr) throws IOException {
     	Parent root;
     	FXMLLoader loader;
-    	switch	(sceneabbr){
+    	switch	(sceneabbr) {
     		case 'e':
     			loader = new FXMLLoader(getClass()
     		            .getResource("../res/TE.fxml"));

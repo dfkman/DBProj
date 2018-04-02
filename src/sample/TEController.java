@@ -22,8 +22,7 @@ import java.util.Optional;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
-public class TEController
-{
+public class TEController {
 	@FXML 
 	private Button Ba;
 	
@@ -33,7 +32,7 @@ public class TEController
 	
 	
 	
-	public TEController(Main mod){
+	public TEController(Main mod) {
 		model = mod;
 		
 	}

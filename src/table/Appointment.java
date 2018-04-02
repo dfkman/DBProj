@@ -1,7 +1,6 @@
 package table;
 
-public class Appointment
-{
+public class Appointment {
 
 	Employee seller;
 	Customer buyer;
@@ -11,7 +10,8 @@ public class Appointment
 	String edate;
 	boolean isEdited;
 	
-	public Appointment(Employee sell, Customer buy, Property prop, String ref, String sdate, String edate){
+	public Appointment(Employee sell, Customer buy, Property prop, String
+			ref, String sdate, String edate) {
 		this.seller = sell;
 		this.buyer = buy;
 		this.prop = prop;
@@ -21,7 +21,7 @@ public class Appointment
 		this.isEdited = false;
 	}
 	
-	public void saveToTable(){
+	public void saveToTable() {
 		//save function for going back to sql
 		isEdited = false;
 	}
