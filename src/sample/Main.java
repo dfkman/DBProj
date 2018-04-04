@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.h2.Driver;
 
 public class Main extends Application {
 
@@ -73,7 +74,7 @@ public class Main extends Application {
     		case 'c':
     			loader = new FXMLLoader(getClass()
     		            .getResource("../res/TC.fxml"));
-    			loader.setController(new TEController(this));
+    			loader.setController(new CTController(this));
     			root = (Parent)loader.load();
     	        stg.setScene(new Scene(root));
     	        break;
