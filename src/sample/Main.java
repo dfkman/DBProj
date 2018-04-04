@@ -42,9 +42,30 @@ public class Main extends Application {
             Connection conn = DriverManager.getConnection("jdbc:h2:~/MarkDB",
                     "test", "test");
             Statement st = conn.createStatement();
-            st.execute("create table pawn(name varchar(20))");
-            //st.execute("drop table pawn");
-            System.out.println("table created successfully");
+            st.execute("CREATE TABLE IF NOT EXISTS EMPLOYEE(SSN CHAR(9) " +
+                    "PRIMARY KEY, name VARCHAR(100), PHONE CHAR(10))");
+
+            st.execute("CREATE TABLE IF NOT EXISTS LAND(addr VARCHAR(256) " +
+                    "PRIMARY KEY, listPrice DECIMAL(10, 2), status VARCHAR(6)," +
+                    " footage INT)");
+
+            st.execute("CREATE TABLE IF NOT EXISTS HOUSE(addr VARCHAR(256) " +
+                    "PRIMARY KEY, listPrice DECIMAL(10, 2), status VARCHAR(6)" +
+                    ", footage INT, nBeds TINYINT, nBaths TINYINT)");
+
+            st.execute("CREATE TABLE IF NOT EXISTS CUSTOMER(ID CHAR(9) " +
+                    "PRIMARY KEY, name VARCHAR(100), phone CHAR(10))");
+
+            st.execute("CREATE TABLE IF NOT EXISTS APPOINTMENT(address " +
+					"VARCHAR(256), cid CHAR(9), sTime " +
+                    "TIME, eTime TIME, refNum INT, eSSN char(9), type char(6)" +
+                    ", PRIMARY KEY(address, cid))");
+            st.execute("CREATE TABLE IF NOT EXISTS SALE(address VARCHAR(256)," +
+                    " price DECIMAL(10, 2), sID INT, cID CHAR(9), eSSN CHAR" +
+                    "(9), date DATETIME, refNum INT, PRIMARY KEY(ADDRESS, " +
+                    "DATE))");
+            st.execute("DROP TABLE IF EXISTS PAWN");
+            System.out.println("tables created successfully");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
