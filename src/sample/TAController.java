@@ -22,6 +22,12 @@ import java.util.Optional;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
+
+/**
+ * Controller for the property table
+ *
+ * HAS ERRORS WHEN BUTTON CLICKED ON
+ */
 public class TAController {
 	@FXML 
 	private Button Ba;
@@ -38,21 +44,19 @@ public class TAController {
 	}
 	
 	@FXML
-	private void initialize() throws IOException{
-		Ba.setOnAction(event ->{
-			try
-			{
+	private void initialize() throws IOException {
+		Ba.setOnAction(event -> {
+			try {
 				model.swapScene('m');
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});
-		Add.setOnAction(event ->{
+		Add.setOnAction(event -> {
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
 			adddiag.setTitle("Add/Edit an Employee...");	
-			adddiag.setHeaderText("Add or Edit a Property's data");
+			adddiag.setHeaderText("Add or Edit an Appointment's data");
 			ButtonType savButtonType = new ButtonType("Save", ButtonData.OK_DONE);
 			adddiag.getDialogPane().getButtonTypes().addAll(savButtonType, ButtonType.CANCEL);
 			GridPane grid = new GridPane();

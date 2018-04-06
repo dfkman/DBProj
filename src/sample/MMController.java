@@ -37,14 +37,14 @@ public class MMController {
 	}
 	
 	@FXML
-	private void initialize(){	
+	private void initialize() {
 		Emp.setOnAction((event) -> {
 			try {
 				model.swapScene('e');
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			};
+			}
 		});
 		Cust.setOnAction((event) -> {
 			try {

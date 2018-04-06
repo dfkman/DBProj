@@ -8,5 +8,4 @@ public class House extends Property {
 		this.beds = nbed;
 		this.baths = nbath;
 	}
-
 }

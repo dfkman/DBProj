@@ -22,6 +22,10 @@ import java.util.Optional;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
+
+/**
+ * Controler for customer
+ */
 public class CTController {
 	@FXML 
 	private Button Ba;
@@ -38,23 +42,23 @@ public class CTController {
 	}
 	
 	@FXML
-	private void initialize() throws IOException{
-		Ba.setOnAction(event ->{
-			try
-			{
+	private void initialize() throws IOException {
+		Ba.setOnAction(event -> {
+			try {
 				model.swapScene('m');
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});
-		Add.setOnAction(event ->{
+		Add.setOnAction(event -> {
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
 			adddiag.setTitle("Add/Edit an Employee...");	
 			adddiag.setHeaderText("Add or Edit a Customer's data");
-			ButtonType savButtonType = new ButtonType("Save", ButtonData.OK_DONE);
-			adddiag.getDialogPane().getButtonTypes().addAll(savButtonType, ButtonType.CANCEL);
+			ButtonType savButtonType = new ButtonType("Save", ButtonData
+					.OK_DONE);
+			adddiag.getDialogPane().getButtonTypes().addAll(savButtonType,
+					ButtonType.CANCEL);
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
 			grid.setVgap(10);
