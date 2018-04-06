@@ -102,7 +102,7 @@ public class Main extends Application {
     		case 'p':
     			loader = new FXMLLoader(getClass()
     		            .getResource("../res/TP.fxml"));
-    			loader.setController(new TEController(this));
+    			loader.setController(new TPController(this));
     			root = (Parent)loader.load();
     	        stg.setScene(new Scene(root));
     	        break;

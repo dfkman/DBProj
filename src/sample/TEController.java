@@ -1,5 +1,6 @@
 package sample;
 
+import table.Employee;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.*;
 import javafx.scene.control.ButtonBar.ButtonData; 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -28,6 +30,19 @@ public class TEController {
 	
 	@FXML
 	private Button Add;
+	
+	@FXML
+	private TableView TabView;
+	
+	@FXML
+	private TableColumn namCol;
+
+	
+	@FXML
+	private TableColumn ponCol;
+
+	@FXML
+	private TableColumn ssnCol;
 	private Main model;
 	
 	
@@ -39,10 +54,16 @@ public class TEController {
 	
 	@FXML
 	private void initialize() throws IOException{
+		namCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("name"));
+		ponCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("pnumber"));
+		ssnCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("SSN"));
+		final ObservableList<Employee> data = FXCollections.observableArrayList();
+		TabView.setItems(data);
 		Ba.setOnAction(event ->{
 			try
 			{
 				model.swapScene('m');
+				
 			} catch (IOException e)
 			{
 				// TODO Auto-generated catch block
@@ -84,6 +105,7 @@ public class TEController {
 				return null;
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
+			data.add(new Employee(newEntry.get().get(0),newEntry.get().get(1),newEntry.get().get(2)));
 		});
 	}
 }

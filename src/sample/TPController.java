@@ -52,7 +52,7 @@ public class TPController {
 		Add.setOnAction(event ->{
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
 			adddiag.setTitle("Add/Edit an Employee...");	
-			adddiag.setHeaderText("Add or Edit an Employee's data");
+			adddiag.setHeaderText("Add or Edit a Property's data");
 			ButtonType savButtonType = new ButtonType("Save", ButtonData.OK_DONE);
 			adddiag.getDialogPane().getButtonTypes().addAll(savButtonType, ButtonType.CANCEL);
 			GridPane grid = new GridPane();
@@ -63,14 +63,20 @@ public class TPController {
 			name.setPromptText("name");
 			TextField phone = new TextField();
 			phone.setPromptText("phone");
-			TextField SSN = new TextField();
-			SSN.setPromptText("SSN");
+			ObservableList<String> options = 
+				    FXCollections.observableArrayList(
+				        "Option 1",
+				        "Option 2",
+				        "Option 3"
+				    );
+			final ComboBox cust = new ComboBox(options);
+			cust.setValue(options.get(0));
 			grid.add(new Label("Name:"), 0, 0);
 			grid.add(name, 1, 0);
 			grid.add(new Label("Phone:"), 0, 1);
 			grid.add(phone, 1, 1);
-			grid.add(new Label("SSN:"), 0, 2);
-			grid.add(SSN, 1, 2);
+			grid.add(new Label("Seller:"), 0, 2);
+			grid.add(cust, 1, 2);
 			adddiag.getDialogPane().setContent(grid);
 			Platform.runLater(() -> name.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
@@ -78,7 +84,8 @@ public class TPController {
 					ArrayList<String> Result = new ArrayList<>();
 					Result.add(name.getText());
 					Result.add(phone.getText());
-					Result.add(SSN.getText());
+					Result.add((String) cust.getValue());
+					System.out.println(Result.get(2));
 					return Result;
 				}
 				return null;

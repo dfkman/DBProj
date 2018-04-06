@@ -8,11 +8,11 @@
    <children>
       <VBox prefHeight="400.0" prefWidth="604.0">
          <children>
-            <TableView prefHeight="200.0" prefWidth="565.0">
+            <TableView fx:id="TabView" prefHeight="200.0" prefWidth="565.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Name" />
-                <TableColumn prefWidth="75.0" text="Address" />
-                  <TableColumn prefWidth="75.0" text="SSN" />
+                <TableColumn fx:id="namCol" prefWidth="75.0" text="Name" />
+                <TableColumn fx:id="ponCol" prefWidth="75.0" text="Phone" />
+                  <TableColumn fx:id="ssnCol" prefWidth="75.0" text="SSN" />
               </columns>
             </TableView>
             <GridPane>
