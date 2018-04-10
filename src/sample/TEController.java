@@ -24,6 +24,10 @@ import java.util.Optional;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
+
+/**
+ * Controler for the Employee table
+ */
 public class TEController {
 	@FXML 
 	private Button Ba;
@@ -53,29 +57,33 @@ public class TEController {
 	}
 	
 	@FXML
-	private void initialize() throws IOException{
-		namCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("name"));
-		ponCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("pnumber"));
-		ssnCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("SSN"));
-		final ObservableList<Employee> data = FXCollections.observableArrayList();
+	private void initialize() throws IOException {
+		namCol.setCellValueFactory(new PropertyValueFactory<Employee,String>
+				("name"));
+		ponCol.setCellValueFactory(new PropertyValueFactory<Employee,String>
+				("pnumber"));
+		ssnCol.setCellValueFactory(new PropertyValueFactory<Employee,String>
+				("SSN"));
+		final ObservableList<Employee> data = FXCollections
+				.observableArrayList();
 		TabView.setItems(data);
-		Ba.setOnAction(event ->{
-			try
-			{
+		Ba.setOnAction(event -> {
+			try {
 				model.swapScene('m');
 				
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});
-		Add.setOnAction(event ->{
+		Add.setOnAction(event -> {
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
 			adddiag.setTitle("Add/Edit an Employee...");	
 			adddiag.setHeaderText("Add or Edit an Employee's data");
-			ButtonType savButtonType = new ButtonType("Save", ButtonData.OK_DONE);
-			adddiag.getDialogPane().getButtonTypes().addAll(savButtonType, ButtonType.CANCEL);
+			ButtonType savButtonType = new ButtonType("Save", ButtonData
+					.OK_DONE);
+			adddiag.getDialogPane().getButtonTypes().addAll(savButtonType,
+					ButtonType.CANCEL);
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
 			grid.setVgap(10);
@@ -105,7 +113,8 @@ public class TEController {
 				return null;
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
-			data.add(new Employee(newEntry.get().get(0),newEntry.get().get(1),newEntry.get().get(2)));
+			data.add(new Employee(newEntry.get().get(0),newEntry.get().get
+					(1),newEntry.get().get(2)));
 		});
 	}
 }

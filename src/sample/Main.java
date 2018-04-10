@@ -22,10 +22,11 @@ public class Main extends Application {
 	private Schema schem;
 	
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
     	schem = new Schema();
     	stg = primaryStage;
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("../res/MM.fxml").toURI().toURL());
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource(
+        		"../res/MM.fxml").toURI().toURL());
         loader.setController(new MMController(this));
         Parent root = (Parent)loader.load();
         Scene scene = new Scene(root);
@@ -60,6 +61,7 @@ public class Main extends Application {
 					"VARCHAR(256), cid CHAR(9), sTime " +
                     "TIME, eTime TIME, refNum INT, eSSN char(9), type char(6)" +
                     ", PRIMARY KEY(address, cid))");
+
             st.execute("CREATE TABLE IF NOT EXISTS SALE(address VARCHAR(256)," +
                     " price DECIMAL(10, 2), sID INT, cID CHAR(9), eSSN CHAR" +
                     "(9), date DATETIME, refNum INT, PRIMARY KEY(ADDRESS, " +
