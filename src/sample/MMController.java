@@ -14,6 +14,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
+import table.SQLMiddleMan;
 
 public class MMController {
 	@FXML 

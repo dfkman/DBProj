@@ -22,6 +22,7 @@ import java.util.Optional;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
+import table.SQLMiddleMan;
 
 /**
  *
@@ -33,11 +34,12 @@ public class TPController {
 	@FXML
 	private Button Add;
 	private Main model;
+	private SQLMiddleMan mm;
 	
 	
-	
-	public TPController(Main mod) {
+	public TPController(Main mod, SQLMiddleMan mm) {
 		model = mod;
+		this.mm = mm;
 	}
 	
 	@FXML

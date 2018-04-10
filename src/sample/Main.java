@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import table.SQLMiddleMan;
 import table.Schema;
 
 import java.io.IOException;
@@ -20,59 +21,62 @@ public class Main extends Application {
 
 	private Stage stg;
 	private Schema schem;
+	private SQLMiddleMan middleMan;
+	private Statement st;
 	
     @Override
     public void start(Stage primaryStage) throws Exception {
+		try {
+			Class.forName("org.h2.Driver");
+			// "jdbc:h2:~/{name of the database}", "username", "password"
+			Connection conn = DriverManager.getConnection("jdbc:h2:~/MarkDB",
+					"test", "test");
+			st = conn.createStatement();
+			st.execute("CREATE TABLE IF NOT EXISTS EMPLOYEE(SSN CHAR(9) " +
+					"PRIMARY KEY, name VARCHAR(100), PHONE CHAR(10))");
+
+			st.execute("CREATE TABLE IF NOT EXISTS LAND(addr VARCHAR(256) " +
+					"PRIMARY KEY, listPrice DECIMAL(10, 2), status VARCHAR(6)," +
+					" footage INT)");
+
+			st.execute("CREATE TABLE IF NOT EXISTS HOUSE(addr VARCHAR(256) " +
+					"PRIMARY KEY, listPrice DECIMAL(10, 2), status VARCHAR(6)" +
+					", footage INT, nBeds TINYINT, nBaths TINYINT)");
+
+			st.execute("CREATE TABLE IF NOT EXISTS CUSTOMER(ID CHAR(9) " +
+					"PRIMARY KEY, name VARCHAR(100), phone CHAR(10))");
+
+			st.execute("CREATE TABLE IF NOT EXISTS APPOINTMENT(address " +
+					"VARCHAR(256), cid CHAR(9), sTime " +
+					"TIME, eTime TIME, refNum INT, eSSN char(9), type char(6)" +
+					", PRIMARY KEY(address, cid))");
+
+			st.execute("CREATE TABLE IF NOT EXISTS SALE(address VARCHAR(256)," +
+					" price DECIMAL(10, 2), sID INT, cID CHAR(9), eSSN CHAR" +
+					"(9), date DATETIME, refNum INT, PRIMARY KEY(ADDRESS, " +
+					"DATE))");
+			st.execute("DROP TABLE IF EXISTS PAWN");
+			System.out.println("tables created successfully");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		middleMan = new SQLMiddleMan(st);
     	schem = new Schema();
     	stg = primaryStage;
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(
         		"../res/MM.fxml").toURI().toURL());
         loader.setController(new MMController(this));
-        Parent root = (Parent)loader.load();
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Property Management System");
         primaryStage.show();
     }
 
-
     public static void main(String[] args) {
-        try {
-            Class.forName("org.h2.Driver");
-            // "jdbc:h2:~/{name of the database}", "username", "password"
-            Connection conn = DriverManager.getConnection("jdbc:h2:~/MarkDB",
-                    "test", "test");
-            Statement st = conn.createStatement();
-            st.execute("CREATE TABLE IF NOT EXISTS EMPLOYEE(SSN CHAR(9) " +
-                    "PRIMARY KEY, name VARCHAR(100), PHONE CHAR(10))");
-
-            st.execute("CREATE TABLE IF NOT EXISTS LAND(addr VARCHAR(256) " +
-                    "PRIMARY KEY, listPrice DECIMAL(10, 2), status VARCHAR(6)," +
-                    " footage INT)");
-
-            st.execute("CREATE TABLE IF NOT EXISTS HOUSE(addr VARCHAR(256) " +
-                    "PRIMARY KEY, listPrice DECIMAL(10, 2), status VARCHAR(6)" +
-                    ", footage INT, nBeds TINYINT, nBaths TINYINT)");
-
-            st.execute("CREATE TABLE IF NOT EXISTS CUSTOMER(ID CHAR(9) " +
-                    "PRIMARY KEY, name VARCHAR(100), phone CHAR(10))");
-
-            st.execute("CREATE TABLE IF NOT EXISTS APPOINTMENT(address " +
-					"VARCHAR(256), cid CHAR(9), sTime " +
-                    "TIME, eTime TIME, refNum INT, eSSN char(9), type char(6)" +
-                    ", PRIMARY KEY(address, cid))");
-
-            st.execute("CREATE TABLE IF NOT EXISTS SALE(address VARCHAR(256)," +
-                    " price DECIMAL(10, 2), sID INT, cID CHAR(9), eSSN CHAR" +
-                    "(9), date DATETIME, refNum INT, PRIMARY KEY(ADDRESS, " +
-                    "DATE))");
-            st.execute("DROP TABLE IF EXISTS PAWN");
-            System.out.println("tables created successfully");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         launch(args);
     }
     
@@ -83,7 +87,7 @@ public class Main extends Application {
     		case 'e':
     			loader = new FXMLLoader(getClass()
     		            .getResource("../res/TE.fxml"));
-    			loader.setController(new TEController(this));
+    			loader.setController(new TEController(this, middleMan));
     			root = (Parent)loader.load();
     	        stg.setScene(new Scene(root));
     	        break;
@@ -97,28 +101,28 @@ public class Main extends Application {
     		case 'c':
     			loader = new FXMLLoader(getClass()
     		            .getResource("../res/TC.fxml"));
-    			loader.setController(new CTController(this));
+    			loader.setController(new CTController(this, middleMan));
     			root = (Parent)loader.load();
     	        stg.setScene(new Scene(root));
     	        break;
     		case 'p':
     			loader = new FXMLLoader(getClass()
     		            .getResource("../res/TP.fxml"));
-    			loader.setController(new TPController(this));
+    			loader.setController(new TPController(this, middleMan));
     			root = (Parent)loader.load();
     	        stg.setScene(new Scene(root));
     	        break;
     		case 's':
     			loader = new FXMLLoader(getClass()
     		            .getResource("../res/TS.fxml"));
-    			loader.setController(new TEController(this));
+    			loader.setController(new TEController(this, middleMan));
     			root = (Parent)loader.load();
     	        stg.setScene(new Scene(root));
     	        break;
     		case 'a':
     			loader = new FXMLLoader(getClass()
     		            .getResource("../res/TA.fxml"));
-    			loader.setController(new TEController(this));
+    			loader.setController(new TEController(this, middleMan));
     			root = (Parent)loader.load();
     	        stg.setScene(new Scene(root));
     	        break;

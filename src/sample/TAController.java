@@ -22,6 +22,7 @@ import java.util.Optional;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
+import table.SQLMiddleMan;
 
 /**
  * Controller for the property table
@@ -35,12 +36,13 @@ public class TAController {
 	@FXML
 	private Button Add;
 	private Main model;
+	private SQLMiddleMan mm;
 	
 	
 	
-	public TAController(Main mod) {
+	public TAController(Main mod, SQLMiddleMan mm) {
 		model = mod;
-		
+		this.mm = mm;
 	}
 	
 	@FXML

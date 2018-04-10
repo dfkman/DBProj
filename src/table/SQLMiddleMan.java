@@ -1,8 +1,17 @@
 package table;
 
+import java.util.ArrayList;
+import java.sql.Statement;
+
 public class SQLMiddleMan {
 
-	public void executeQuery(String cmd) {
-		//execute sql called
+	private Statement st;
+
+	public SQLMiddleMan(Statement st) {
+		this.st = st;
+	}
+
+	public void addCustomer(ArrayList<String> array) {
+		
 	}
 }

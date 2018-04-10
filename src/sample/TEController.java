@@ -24,6 +24,7 @@ import java.util.Optional;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
+import table.SQLMiddleMan;
 
 /**
  * Controler for the Employee table
@@ -48,12 +49,12 @@ public class TEController {
 	@FXML
 	private TableColumn ssnCol;
 	private Main model;
+	private SQLMiddleMan mm;
 	
 	
-	
-	public TEController(Main mod) {
+	public TEController(Main mod, SQLMiddleMan mm) {
 		model = mod;
-		
+		this.mm = mm;
 	}
 	
 	@FXML

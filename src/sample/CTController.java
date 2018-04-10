@@ -22,28 +22,29 @@ import java.util.Optional;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
+import table.SQLMiddleMan;
 
 /**
  * Controler for customer
  */
 public class CTController {
 	@FXML 
-	private Button Ba;
+	private Button ba;
 	
 	@FXML
-	private Button Add;
+	private Button add;
 	private Main model;
+	private SQLMiddleMan mm;
 	
 	
-	
-	public CTController(Main mod) {
+	public CTController(Main mod, SQLMiddleMan mm) {
 		model = mod;
-		
+		this.mm = mm;
 	}
 	
 	@FXML
 	private void initialize() throws IOException {
-		Ba.setOnAction(event -> {
+		ba.setOnAction(event -> {
 			try {
 				model.swapScene('m');
 			} catch (IOException e) {
@@ -51,7 +52,7 @@ public class CTController {
 				e.printStackTrace();
 			}
 		});
-		Add.setOnAction(event -> {
+		add.setOnAction(event -> {
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
 			adddiag.setTitle("Add/Edit an Employee...");	
 			adddiag.setHeaderText("Add or Edit a Customer's data");
@@ -75,14 +76,15 @@ public class CTController {
 			Platform.runLater(() -> name.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType){
-					ArrayList<String> Result = new ArrayList<>();
-					Result.add(name.getText());
-					Result.add(phone.getText());
-					return Result;
+					ArrayList<String> result = new ArrayList<>();
+					result.add(name.getText());
+					result.add(phone.getText());
+					return result;
 				}
 				return null;
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
+			mm.addCustomer(newEntry.get());
 		});
 	}
 }
