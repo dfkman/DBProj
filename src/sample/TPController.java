@@ -51,7 +51,7 @@ public class TPController {
 		});
 		Add.setOnAction(event ->{
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
-			adddiag.setTitle("Add/Edit an Employee...");	
+			adddiag.setTitle("Add/Edit Property...");	
 			adddiag.setHeaderText("Add or Edit a Property's data");
 			ButtonType savButtonType = new ButtonType("Save", ButtonData.OK_DONE);
 			adddiag.getDialogPane().getButtonTypes().addAll(savButtonType, ButtonType.CANCEL);
@@ -59,10 +59,16 @@ public class TPController {
 			grid.setHgap(10);
 			grid.setVgap(10);
 			grid.setPadding(new Insets(20, 150, 10, 10));
-			TextField name = new TextField();
-			name.setPromptText("name");
-			TextField phone = new TextField();
-			phone.setPromptText("phone");
+			TextField addr = new TextField();
+			addr.setPromptText("address");
+			TextField sqft = new TextField();
+			sqft.setPromptText("sq ft");
+			TextField listp = new TextField();
+			listp.setPromptText("list price");
+			TextField nbed = new TextField();
+			nbed.setPromptText("Beds");
+			TextField nbath = new TextField();
+			nbath.setPromptText("Baths");
 			ObservableList<String> options = 
 				    FXCollections.observableArrayList(
 				        "Option 1",
@@ -71,19 +77,33 @@ public class TPController {
 				    );
 			final ComboBox cust = new ComboBox(options);
 			cust.setValue(options.get(0));
-			grid.add(new Label("Name:"), 0, 0);
-			grid.add(name, 1, 0);
-			grid.add(new Label("Phone:"), 0, 1);
-			grid.add(phone, 1, 1);
-			grid.add(new Label("Seller:"), 0, 2);
-			grid.add(cust, 1, 2);
+			grid.add(new Label("Address:"), 0, 0);
+			grid.add(addr, 1, 0);
+			grid.add(new Label("Sq. Footage:"), 0, 1);
+			grid.add(sqft, 1, 1);
+			grid.add(new Label("List Price"), 0, 2);
+			grid.add(listp, 1, 2);
+			grid.add(new Label("Seller:"), 0, 3);
+			grid.add(cust, 1, 3);
 			adddiag.getDialogPane().setContent(grid);
-			Platform.runLater(() -> name.requestFocus());
+			final ToggleGroup group = new ToggleGroup();
+			RadioButton rb1 = new RadioButton("House");
+			rb1.setToggleGroup(group);
+			rb1.setSelected(true);
+			RadioButton rb2 = new RadioButton("Land");
+			rb2.setToggleGroup(group);
+			grid.add(rb1, 1, 4);
+			grid.add(rb2, 1, 5);
+			grid.add(nbed, 1, 6);
+			grid.add(new Label("Num of Beds"), 0, 6);
+			grid.add(nbath, 1, 7);
+			grid.add(new Label("Num of Baths"), 0, 7);
+			Platform.runLater(() -> addr.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType){
 					ArrayList<String> Result = new ArrayList<>();
-					Result.add(name.getText());
-					Result.add(phone.getText());
+					Result.add(addr.getText());
+					Result.add(sqft.getText());
 					Result.add((String) cust.getValue());
 					System.out.println(Result.get(2));
 					return Result;

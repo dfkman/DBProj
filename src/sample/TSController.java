@@ -22,7 +22,7 @@ import java.util.Optional;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
-public class TAController {
+public class TSController {
 	@FXML 
 	private Button Ba;
 	
@@ -32,7 +32,7 @@ public class TAController {
 	
 	
 	
-	public TAController(Main mod) {
+	public TSController(Main mod) {
 		model = mod;
 		
 	}
@@ -93,11 +93,11 @@ public class TAController {
 			grid.add(proprt, 1, 0);
 			grid.add(new Label("Employee:"), 0, 1);
 			grid.add(emp, 1, 1);
-			grid.add(new Label("Viewer:"), 0, 2);
+			grid.add(new Label("Buyer:"), 0, 2);
 			grid.add(cust, 1, 2);
-			grid.add(new Label("Start Time:"), 0, 3);
+			grid.add(new Label("Date:"), 0, 3);
 			grid.add(start, 1, 3);
-			grid.add(new Label("End Time:"), 0, 4);
+			grid.add(new Label("Sell Price:"), 0, 4);
 			grid.add(end, 1, 4);
 			grid.add(new Label("Referral Number"), 0, 5);
 			grid.add(ref, 1, 5);

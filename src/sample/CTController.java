@@ -51,7 +51,7 @@ public class CTController {
 		});
 		Add.setOnAction(event ->{
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
-			adddiag.setTitle("Add/Edit an Employee...");	
+			adddiag.setTitle("Add/Edit an Customer...");	
 			adddiag.setHeaderText("Add or Edit a Customer's data");
 			ButtonType savButtonType = new ButtonType("Save", ButtonData.OK_DONE);
 			adddiag.getDialogPane().getButtonTypes().addAll(savButtonType, ButtonType.CANCEL);
