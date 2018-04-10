@@ -120,14 +120,14 @@ public class Main extends Application {
     		case 's':
     			loader = new FXMLLoader(getClass()
     		            .getResource("../res/TS.fxml"));
-    			loader.setController(new TEController(this, middleMan));
+    			loader.setController(new TSController(this, middleMan));
     			root = (Parent)loader.load();
     	        stg.setScene(new Scene(root));
     	        break;
     		case 'a':
     			loader = new FXMLLoader(getClass()
     		            .getResource("../res/TA.fxml"));
-    			loader.setController(new TEController(this, middleMan));
+    			loader.setController(new TAController(this, middleMan));
     			root = (Parent)loader.load();
     	        stg.setScene(new Scene(root));
     	        break;

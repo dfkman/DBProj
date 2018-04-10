@@ -57,7 +57,7 @@ public class TAController {
 		});
 		Add.setOnAction(event -> {
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
-			adddiag.setTitle("Add/Edit an Employee...");	
+			adddiag.setTitle("Add/Edit an Appointment...");	
 			adddiag.setHeaderText("Add or Edit an Appointment's data");
 			ButtonType savButtonType = new ButtonType("Save", ButtonData.OK_DONE);
 			adddiag.getDialogPane().getButtonTypes().addAll(savButtonType, ButtonType.CANCEL);
@@ -65,10 +65,12 @@ public class TAController {
 			grid.setHgap(10);
 			grid.setVgap(10);
 			grid.setPadding(new Insets(20, 150, 10, 10));
-			TextField name = new TextField();
-			name.setPromptText("name");
-			TextField phone = new TextField();
-			phone.setPromptText("phone");
+			TextField start = new TextField();
+			start.setPromptText("start time");
+			TextField end = new TextField();
+			end.setPromptText("end time");
+			TextField ref = new TextField();
+			ref.setPromptText("Referral Number");
 			ObservableList<String> options = 
 				    FXCollections.observableArrayList(
 				        "Option 1",
@@ -77,19 +79,39 @@ public class TAController {
 				    );
 			final ComboBox cust = new ComboBox(options);
 			cust.setValue(options.get(0));
-			grid.add(new Label("Name:"), 0, 0);
-			grid.add(name, 1, 0);
-			grid.add(new Label("Phone:"), 0, 1);
-			grid.add(phone, 1, 1);
-			grid.add(new Label("Seller:"), 0, 2);
+			ObservableList<String> prop = 
+				    FXCollections.observableArrayList(
+				        "Option 1",
+				        "Option 2",
+				        "Option 3"
+				    );
+			final ComboBox proprt = new ComboBox(prop);
+			proprt.setValue(prop.get(0));
+			ObservableList<String> empv = 
+				    FXCollections.observableArrayList(
+				        "Option 1",
+				        "Option 2",
+				        "Option 3"
+				    );
+			final ComboBox emp = new ComboBox(empv);
+			emp.setValue(empv.get(0));
+			grid.add(new Label("Property:"), 0, 0);
+			grid.add(proprt, 1, 0);
+			grid.add(new Label("Employee:"), 0, 1);
+			grid.add(emp, 1, 1);
+			grid.add(new Label("Viewer:"), 0, 2);
 			grid.add(cust, 1, 2);
+			grid.add(new Label("Start Time:"), 0, 3);
+			grid.add(start, 1, 3);
+			grid.add(new Label("End Time:"), 0, 4);
+			grid.add(end, 1, 4);
+			grid.add(new Label("Referral Number"), 0, 5);
+			grid.add(ref, 1, 5);
 			adddiag.getDialogPane().setContent(grid);
-			Platform.runLater(() -> name.requestFocus());
+			Platform.runLater(() -> start.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType){
 					ArrayList<String> Result = new ArrayList<>();
-					Result.add(name.getText());
-					Result.add(phone.getText());
 					Result.add((String) cust.getValue());
 					System.out.println(Result.get(2));
 					return Result;
