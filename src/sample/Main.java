@@ -32,6 +32,12 @@ public class Main extends Application {
 			Connection conn = DriverManager.getConnection("jdbc:h2:~/MarkDB",
 					"test", "test");
 			st = conn.createStatement();
+			st.execute("DROP TABLE IF EXISTS EMPLOYEE");
+			st.execute("DROP TABLE IF EXISTS LAND");
+			st.execute("DROP TABLE IF EXISTS HOUSE");
+			st.execute("DROP TABLE IF EXISTS CUSTOMER");
+			st.execute("DROP TABLE IF EXISTS APPOINTMENT");
+			st.execute("DROP TABLE IF EXISTS SALE");
 			st.execute("CREATE TABLE IF NOT EXISTS EMPLOYEE(SSN CHAR(9) " +
 					"PRIMARY KEY, name VARCHAR(100), PHONE CHAR(10))");
 
@@ -40,7 +46,7 @@ public class Main extends Application {
 					" footage INT)");
 
 			st.execute("CREATE TABLE IF NOT EXISTS HOUSE(addr VARCHAR(256) " +
-					"PRIMARY KEY, listPrice DECIMAL(10, 2), status VARCHAR(6)" +
+					"PRIMARY KEY, listPrice DECIMAL(10, 2)" +
 					", footage INT, nBeds TINYINT, nBaths TINYINT)");
 
 			st.execute("CREATE TABLE IF NOT EXISTS CUSTOMER(ID CHAR(9) " +
@@ -55,7 +61,6 @@ public class Main extends Application {
 					" price DECIMAL(10, 2), sID INT, cID CHAR(9), eSSN CHAR" +
 					"(9), date DATETIME, refNum INT, PRIMARY KEY(ADDRESS, " +
 					"DATE))");
-			st.execute("DROP TABLE IF EXISTS PAWN");
 			System.out.println("tables created successfully");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

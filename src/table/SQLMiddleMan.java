@@ -1,5 +1,6 @@
 package table;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Statement;
 
@@ -11,7 +12,16 @@ public class SQLMiddleMan {
 		this.st = st;
 	}
 
-	public void addCustomer(ArrayList<String> array) {
-		
+	/**
+	 * @param ar [name, phone]
+	 */
+	public void addCustomer(ArrayList<String> ar) {
+		try {
+			st.execute("INSERT INTO CUSTOMER VALUES (" +
+						ar.get(0) + ", " + ar.get(1) +
+					")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
