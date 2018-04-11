@@ -17,11 +17,20 @@ public class SQLMiddleMan {
 	 */
 	public void addCustomer(ArrayList<String> ar) {
 		try {
-			st.execute("INSERT INTO CUSTOMER VALUES (" +
-						ar.get(0) + ", " + ar.get(1) +
-					")");
+			st.execute(String.format("INSERT INTO CUSTOMER VALUES (\"%s\", " +
+					"\"%s\");", ar.get(0), ar.get(1)));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
+	/*
+	public void addEmployee(ar) {
+		try {
+			st.execute(String.format());
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	*/
 }

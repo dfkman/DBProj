@@ -76,15 +76,15 @@ public class CTController {
 			Platform.runLater(() -> name.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType){
-					ArrayList<String> result = new ArrayList<>();
-					result.add(name.getText());
-					result.add(phone.getText());
-					return result;
+					ArrayList<String> Result = new ArrayList<>();
+					Result.add(name.getText());
+					Result.add(phone.getText());
+					return Result;
 				}
 				return null;
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
-			mm.addCustomer(newEntry.get());
+			//mm.addCustomer(newEntry.get());
 		});
 	}
 }

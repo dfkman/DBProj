@@ -32,12 +32,14 @@ public class Main extends Application {
 			Connection conn = DriverManager.getConnection("jdbc:h2:~/MarkDB",
 					"test", "test");
 			st = conn.createStatement();
+			/*
 			st.execute("DROP TABLE IF EXISTS EMPLOYEE");
 			st.execute("DROP TABLE IF EXISTS LAND");
 			st.execute("DROP TABLE IF EXISTS HOUSE");
 			st.execute("DROP TABLE IF EXISTS CUSTOMER");
 			st.execute("DROP TABLE IF EXISTS APPOINTMENT");
 			st.execute("DROP TABLE IF EXISTS SALE");
+			*/
 			st.execute("CREATE TABLE IF NOT EXISTS EMPLOYEE(SSN CHAR(9) " +
 					"PRIMARY KEY, name VARCHAR(100), PHONE CHAR(10))");
 
