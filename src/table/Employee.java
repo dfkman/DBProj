@@ -30,5 +30,14 @@ public class Employee {
 	public String getSSN(){
 		return SSN.get();
 	}
+	public void setName(String nam){
+		this.name.set(nam);
+	}
+	public void setSSN(String ssn){
+		this.SSN.set(ssn);
+	}
+	public void setPhone(String pn){
+		this.pnumber.set(pn);
+	}
 
 }

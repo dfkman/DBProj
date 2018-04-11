@@ -73,6 +73,7 @@ public class TEController {
 				("SSN"));
 		final ObservableList<Employee> data = FXCollections
 				.observableArrayList();
+		//LOAD SQL HERE: REPLACE ABOVE
 		TabView.setItems(data);
 		Ba.setOnAction(event -> {
 			try {
@@ -115,6 +116,7 @@ public class TEController {
 					Result.add(name.getText());
 					Result.add(phone.getText());
 					Result.add(SSN.getText());
+					//SQL GOES HERE (Insert into values)
 					return Result;
 				}
 				return null;
@@ -157,6 +159,11 @@ public class TEController {
 						Result.add(name.getText());
 						Result.add(phone.getText());
 						Result.add(SSN.getText());
+						emp.setName(name.getText());
+						emp.setPhone(phone.getText());
+						emp.setSSN(SSN.getText());
+						TabView.refresh();
+						//SQL goes here (UPDATE EMP VALUES WHERE...)
 						return Result;
 					}
 					return null;
@@ -167,6 +174,7 @@ public class TEController {
 		Del.setOnAction(event ->{
 			Employee emp = (Employee) TabView.getSelectionModel().getSelectedItem();
 			if (emp != null){
+				//DELETE SQL HERE
 				data.remove(emp);
 			}
 		});
