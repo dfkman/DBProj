@@ -37,6 +37,12 @@ public class TEController {
 	private Button Add;
 	
 	@FXML
+	private Button Edit;
+	
+	@FXML
+	private Button Del;
+	
+	@FXML
 	private TableView TabView;
 	
 	@FXML
@@ -116,6 +122,53 @@ public class TEController {
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
 			data.add(new Employee(newEntry.get().get(0),newEntry.get().get
 					(1),newEntry.get().get(2)));
+		});
+		Edit.setOnAction(event -> {
+			Employee emp = (Employee) TabView.getSelectionModel().getSelectedItem();
+			if (emp != null){
+				Dialog<ArrayList<String>> adddiag = new Dialog<>();
+				adddiag.setTitle("Add/Edit an Employee...");	
+				adddiag.setHeaderText("Add or Edit an Employee's data");
+				ButtonType savButtonType = new ButtonType("Save", ButtonData
+						.OK_DONE);
+				adddiag.getDialogPane().getButtonTypes().addAll(savButtonType,
+						ButtonType.CANCEL);
+				GridPane grid = new GridPane();
+				grid.setHgap(10);
+				grid.setVgap(10);
+				grid.setPadding(new Insets(20, 150, 10, 10));
+				TextField name = new TextField();
+				name.setText(emp.getName());
+				TextField phone = new TextField();
+				phone.setText(emp.getPnumber());
+				TextField SSN = new TextField();
+				SSN.setText(emp.getSSN());
+				grid.add(new Label("Name:"), 0, 0);
+				grid.add(name, 1, 0);
+				grid.add(new Label("Phone:"), 0, 1);
+				grid.add(phone, 1, 1);
+				grid.add(new Label("SSN:"), 0, 2);
+				grid.add(SSN, 1, 2);
+				adddiag.getDialogPane().setContent(grid);
+				Platform.runLater(() -> name.requestFocus());
+				adddiag.setResultConverter(dialogButton -> {
+					if (dialogButton == savButtonType){
+						ArrayList<String> Result = new ArrayList<>();
+						Result.add(name.getText());
+						Result.add(phone.getText());
+						Result.add(SSN.getText());
+						return Result;
+					}
+					return null;
+				});
+				Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
+			}
+		});
+		Del.setOnAction(event ->{
+			Employee emp = (Employee) TabView.getSelectionModel().getSelectedItem();
+			if (emp != null){
+				data.remove(emp);
+			}
 		});
 	}
 }
