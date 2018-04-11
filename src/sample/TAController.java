@@ -31,14 +31,12 @@ import table.SQLMiddleMan;
  */
 public class TAController {
 	@FXML 
-	private Button Ba;
+	private Button ba;
 	
 	@FXML
-	private Button Add;
+	private Button add;
 	private Main model;
 	private SQLMiddleMan mm;
-	
-	
 	
 	public TAController(Main mod, SQLMiddleMan mm) {
 		model = mod;
@@ -47,7 +45,7 @@ public class TAController {
 	
 	@FXML
 	private void initialize() throws IOException {
-		Ba.setOnAction(event -> {
+		ba.setOnAction(event -> {
 			try {
 				model.swapScene('m');
 			} catch (IOException e) {
@@ -55,7 +53,7 @@ public class TAController {
 				e.printStackTrace();
 			}
 		});
-		Add.setOnAction(event -> {
+		add.setOnAction(event -> {
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
 			adddiag.setTitle("Add/Edit an Appointment...");	
 			adddiag.setHeaderText("Add or Edit an Appointment's data");
@@ -119,6 +117,7 @@ public class TAController {
 				return null;
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
+
 		});
 	}
 }
