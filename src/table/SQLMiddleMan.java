@@ -28,8 +28,27 @@ public class SQLMiddleMan {
 		}
 	}
 
+	public void deleteEmployee(Employee emp) {
+		try {
+			st.execute("DELETE FROM EMPLOYEE WHERE SSN = \'" + emp.getSSN() +
+					"\'");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void loadEmpData(ObservableList<Employee> data) {
-		//ResultSet = st.execute("SELECT * FROM EMPLOYEE");
+		try {
+			ResultSet rs = st.executeQuery("SELECT * FROM EMPLOYEE");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				data.add(new Employee(rs.getString(1), rs.getString(2), rs
+						.getString(3)));
+				rs.next();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public boolean addEmployee(Employee emp) {

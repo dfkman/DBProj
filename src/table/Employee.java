@@ -8,8 +8,8 @@ public class Employee {
 	private SimpleStringProperty name;
 	private boolean isEdited;
 	
-	public Employee(String Name, String SSN, String phone) {
-		this.name = new SimpleStringProperty(Name);
+	public Employee(String SSN, String name , String phone) {
+		this.name = new SimpleStringProperty(name);
 		this.SSN = new SimpleStringProperty(SSN);
 		this.pnumber = new SimpleStringProperty(phone);
 		isEdited = false;
