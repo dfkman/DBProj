@@ -71,14 +71,13 @@ public class TEController {
 				("pnumber"));
 		ssnCol.setCellValueFactory(new PropertyValueFactory<Employee,String>
 				("SSN"));
-		final ObservableList<Employee> data = FXCollections
+		ObservableList<Employee> data = FXCollections
 				.observableArrayList();
-		//LOAD SQL HERE: REPLACE ABOVE
+		mm.loadEmpData(data);
 		TabView.setItems(data);
 		Ba.setOnAction(event -> {
 			try {
 				model.swapScene('m');
-				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -116,14 +115,22 @@ public class TEController {
 					Result.add(name.getText());
 					Result.add(phone.getText());
 					Result.add(SSN.getText());
-					//SQL GOES HERE (Insert into values)
+					if (!mm.addEmployee(new Employee(name.getText(), SSN
+							.getText(), phone.getText()))) {
+						Alert alert = new Alert(Alert.AlertType.ERROR, "An " +
+								"employee with this SSN already exists", ButtonType.OK);
+						alert.showAndWait();
+						return null;
+					}
 					return Result;
 				}
 				return null;
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
-			data.add(new Employee(newEntry.get().get(0),newEntry.get().get
-					(1),newEntry.get().get(2)));
+			if (newEntry != null) {
+				data.add(new Employee(newEntry.get().get(0),newEntry.get().get
+						(1),newEntry.get().get(2)));
+			}
 		});
 		Edit.setOnAction(event -> {
 			Employee emp = (Employee) TabView.getSelectionModel().getSelectedItem();
@@ -154,7 +161,9 @@ public class TEController {
 				adddiag.getDialogPane().setContent(grid);
 				Platform.runLater(() -> name.requestFocus());
 				adddiag.setResultConverter(dialogButton -> {
-					if (dialogButton == savButtonType){
+					if (dialogButton == savButtonType) {
+						Employee oldEmp = new Employee(emp.getName(), emp
+								.getSSN(), emp.getPnumber());
 						ArrayList<String> Result = new ArrayList<>();
 						Result.add(name.getText());
 						Result.add(phone.getText());
@@ -163,6 +172,7 @@ public class TEController {
 						emp.setPhone(phone.getText());
 						emp.setSSN(SSN.getText());
 						TabView.refresh();
+						mm.updateEmployee(emp, oldEmp); // not implemented yet
 						//SQL goes here (UPDATE EMP VALUES WHERE...)
 						return Result;
 					}
