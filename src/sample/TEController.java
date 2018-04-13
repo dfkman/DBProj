@@ -112,24 +112,7 @@ public class TEController {
 			Platform.runLater(() -> name.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType){
-<<<<<<< HEAD
-					if(!name.getText().equalsIgnoreCase("Hello")){
-						ArrayList<String> Result = new ArrayList<>();
-						Result.add(name.getText());
-						Result.add(phone.getText());
-						Result.add(SSN.getText());
-						//SQL GOES HERE (Insert into values)
-						return Result;
-					}
-					else{
-						Alert alert = new Alert(AlertType.ERROR);
-						alert.setTitle("Error Dialog");
-						alert.setHeaderText("Look, an Error Dialog");
-						alert.setContentText("Ooops, there was an error!");
-						alert.showAndWait();
-						adddiag.showAndWait();
-					}
-=======
+
 					ArrayList<String> Result = new ArrayList<>();
 					Result.add(SSN.getText());
 					Result.add(name.getText());
@@ -142,7 +125,6 @@ public class TEController {
 						return null;
 					}
 					return Result;
->>>>>>> branch 'master' of https://github.com/dfkman/DBProj.git
 				}
 				return null;
 			});
