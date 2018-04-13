@@ -16,6 +16,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.*;
 import javafx.scene.control.cell.*;
 import javafx.scene.control.ButtonBar.ButtonData; 
 import java.util.ArrayList;
@@ -111,6 +112,7 @@ public class TEController {
 			Platform.runLater(() -> name.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType){
+
 					ArrayList<String> Result = new ArrayList<>();
 					Result.add(SSN.getText());
 					Result.add(name.getText());

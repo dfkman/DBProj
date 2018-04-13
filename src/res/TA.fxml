@@ -30,10 +30,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="Add" mnemonicParsing="false" text="Add" />
-                  <Button fx:id="Edit" mnemonicParsing="false" text="Edit" GridPane.columnIndex="1" />
-                  <Button fx:id="Del" mnemonicParsing="false" text="Delete" GridPane.columnIndex="2" />
-                  <Button fx:id="Ba" mnemonicParsing="false" text="Back" GridPane.rowIndex="2" />
+                  <Button fx:id="add" mnemonicParsing="false" text="Add" />
+                  <Button fx:id="edit" mnemonicParsing="false" text="Edit" GridPane.columnIndex="1" />
+                  <Button fx:id="del" mnemonicParsing="false" text="Delete" GridPane.columnIndex="2" />
+                  <Button fx:id="ba" mnemonicParsing="false" text="Back" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>
