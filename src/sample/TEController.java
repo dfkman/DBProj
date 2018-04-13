@@ -16,6 +16,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.*;
 import javafx.scene.control.cell.*;
 import javafx.scene.control.ButtonBar.ButtonData; 
 import java.util.ArrayList;
@@ -112,12 +113,22 @@ public class TEController {
 			Platform.runLater(() -> name.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType){
-					ArrayList<String> Result = new ArrayList<>();
-					Result.add(name.getText());
-					Result.add(phone.getText());
-					Result.add(SSN.getText());
-					//SQL GOES HERE (Insert into values)
-					return Result;
+					if(!name.getText().equalsIgnoreCase("Hello")){
+						ArrayList<String> Result = new ArrayList<>();
+						Result.add(name.getText());
+						Result.add(phone.getText());
+						Result.add(SSN.getText());
+						//SQL GOES HERE (Insert into values)
+						return Result;
+					}
+					else{
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.setTitle("Error Dialog");
+						alert.setHeaderText("Look, an Error Dialog");
+						alert.setContentText("Ooops, there was an error!");
+						alert.showAndWait();
+						adddiag.showAndWait();
+					}
 				}
 				return null;
 			});
