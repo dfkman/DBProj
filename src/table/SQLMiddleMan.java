@@ -69,6 +69,13 @@ public class SQLMiddleMan {
 	}
 
 	public void updateEmployee(Employee newEmp, Employee oldEmp) {
+		try {
+			if (!newEmp.getSSN().equals(oldEmp.getSSN())) {
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		/*
 		try {
 			ResultSet rs = st.executeQuery("select count(*) from employee " +
