@@ -55,8 +55,13 @@ public class TEController {
 
 	@FXML
 	private TableColumn ssnCol;
+
 	private Main model;
+
 	private SQLMiddleMan mm;
+
+	private final Alert SSN_Exists_alert = new Alert(Alert.AlertType.ERROR, "An " +
+			"employee with this SSN already exists", ButtonType.OK);
 	
 	
 	public TEController(Main mod, SQLMiddleMan mm) {
@@ -111,17 +116,14 @@ public class TEController {
 			adddiag.getDialogPane().setContent(grid);
 			Platform.runLater(() -> name.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
-				if (dialogButton == savButtonType){
-
+				if (dialogButton == savButtonType) {
 					ArrayList<String> Result = new ArrayList<>();
 					Result.add(SSN.getText());
 					Result.add(name.getText());
 					Result.add(phone.getText());
 					if (!mm.addEmployee(new Employee(SSN.getText(), name
 							.getText(), phone.getText()))) {
-						Alert alert = new Alert(Alert.AlertType.ERROR, "An " +
-								"employee with this SSN already exists", ButtonType.OK);
-						alert.showAndWait();
+						SSN_Exists_alert.showAndWait();
 						return null;
 					}
 					return Result;
@@ -173,9 +175,14 @@ public class TEController {
 						emp.setSSN(SSN.getText());
 						emp.setName(name.getText());
 						emp.setPhone(phone.getText());
+						if (!mm.updateEmployee(emp, oldEmp)) {
+							SSN_Exists_alert.showAndWait();
+							emp.setSSN(oldEmp.getSSN());
+							emp.setName(oldEmp.getName());
+							emp.setPhone(oldEmp.getPnumber());
+							return null;
+						}
 						TabView.refresh();
-						mm.updateEmployee(emp, oldEmp); // not implemented yet
-						//SQL goes here (UPDATE EMP VALUES WHERE...)
 						return Result;
 					}
 					return null;
