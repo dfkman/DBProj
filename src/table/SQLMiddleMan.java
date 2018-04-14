@@ -111,4 +111,34 @@ public class SQLMiddleMan {
 		}
 		return cust;
 	}
+	public ObservableList<String> loadEmployee(){
+		ObservableList<String> emp = FXCollections.observableArrayList();
+		emp.add("Select an Employee...");
+		try {
+			ResultSet rs = st.executeQuery("SELECT NAME FROM Employee");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				emp.add(rs.getString(1));
+				rs.next();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return emp;
+	}
+	public ObservableList<String> loadProeprty(){
+		ObservableList<String> prop= FXCollections.observableArrayList();
+		prop.add("Select a Property...");
+		try {
+			ResultSet rs = st.executeQuery("(SELECT addr FROM LAND) UNION (SELECT addr FROM HOUSE)");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				prop.add(rs.getString(1));
+				rs.next();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return prop;
+	}
 }
