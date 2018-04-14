@@ -1,6 +1,8 @@
 package table;
 
 import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -96,18 +98,6 @@ public class SQLMiddleMan {
 			e.printStackTrace();
 		}
 		return false;
-		/*
-		try {
-			ResultSet rs = st.executeQuery("select count(*) from employee " +
-					"where ssn = 0");
-			System.out.println(rs.getInt(1));
-		} catch (SQLException e) {
-			if (e.getMessage().contains("No data available")) {
-				System.out.println("squashed");
-			}
-			e.printStackTrace();
-		}
-		*/
 	}
 
 	/*
@@ -119,4 +109,51 @@ public class SQLMiddleMan {
 		}
 	}
 	*/
+	
+	//Loads the customer names/ids
+	public ObservableList<String> loadCust(){
+		ObservableList<String> cust = FXCollections.observableArrayList();
+		cust.add("Select a Customer...");
+		try {
+			ResultSet rs = st.executeQuery("SELECT ID,NAME FROM CUSTOMER");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				cust.add(rs.getString(1) + "/" + rs.getString(2));
+				rs.next();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cust;
+	}
+	public ObservableList<String> loadEmployee(){
+		ObservableList<String> emp = FXCollections.observableArrayList();
+		emp.add("Select an Employee...");
+		try {
+			ResultSet rs = st.executeQuery("SELECT SSN, NAME FROM Employee");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				emp.add(rs.getString(1) + "/" + rs.getString(2));
+				rs.next();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return emp;
+	}
+	public ObservableList<String> loadProperty(){
+		ObservableList<String> prop= FXCollections.observableArrayList();
+		prop.add("Select a Property...");
+		try {
+			ResultSet rs = st.executeQuery("(SELECT addr FROM LAND) UNION (SELECT addr FROM HOUSE)");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				prop.add(rs.getString(1));
+				rs.next();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return prop;
+	}
 }

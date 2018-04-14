@@ -74,12 +74,7 @@ public class TPController {
 			nbed.setPromptText("Beds");
 			TextField nbath = new TextField();
 			nbath.setPromptText("Baths");
-			ObservableList<String> options = 
-				    FXCollections.observableArrayList(
-				        "Option 1",
-				        "Option 2",
-				        "Option 3"
-				    );
+			ObservableList<String> options = mm.loadCust();
 			final ComboBox cust = new ComboBox(options);
 			cust.setValue(options.get(0));
 			grid.add(new Label("Address:"), 0, 0);
