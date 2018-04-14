@@ -69,7 +69,6 @@ public class SQLMiddleMan {
 		}
 		return false;
 	}
-
 	public void updateEmployee(Employee newEmp, Employee oldEmp) {
 		/*
 		try {
@@ -100,10 +99,10 @@ public class SQLMiddleMan {
 		ObservableList<String> cust = FXCollections.observableArrayList();
 		cust.add("Select a Customer...");
 		try {
-			ResultSet rs = st.executeQuery("SELECT NAME FROM CUSTOMER");
+			ResultSet rs = st.executeQuery("SELECT ID,NAME FROM CUSTOMER");
 			rs.first();
 			while (!rs.isAfterLast()) {
-				cust.add(rs.getString(1));
+				cust.add(rs.getString(1) + "/" + rs.getString(2));
 				rs.next();
 			}
 		} catch (SQLException e) {
@@ -115,10 +114,10 @@ public class SQLMiddleMan {
 		ObservableList<String> emp = FXCollections.observableArrayList();
 		emp.add("Select an Employee...");
 		try {
-			ResultSet rs = st.executeQuery("SELECT NAME FROM Employee");
+			ResultSet rs = st.executeQuery("SELECT SSN, NAME FROM Employee");
 			rs.first();
 			while (!rs.isAfterLast()) {
-				emp.add(rs.getString(1));
+				emp.add(rs.getString(1) + "/" + rs.getString(2));
 				rs.next();
 			}
 		} catch (SQLException e) {
@@ -126,7 +125,7 @@ public class SQLMiddleMan {
 		}
 		return emp;
 	}
-	public ObservableList<String> loadProeprty(){
+	public ObservableList<String> loadProperty(){
 		ObservableList<String> prop= FXCollections.observableArrayList();
 		prop.add("Select a Property...");
 		try {
