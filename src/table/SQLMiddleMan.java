@@ -1,6 +1,8 @@
 package table;
 
 import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -92,4 +94,21 @@ public class SQLMiddleMan {
 		}
 	}
 	*/
+	
+	//Loads the customer names/ids
+	public ObservableList<String> loadCust(){
+		ObservableList<String> cust = FXCollections.observableArrayList();
+		cust.add("Select a Customer...");
+		try {
+			ResultSet rs = st.executeQuery("SELECT NAME FROM CUSTOMER");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				cust.add(rs.getString(1));
+				rs.next();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cust;
+	}
 }
