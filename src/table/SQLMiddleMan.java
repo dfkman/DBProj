@@ -31,7 +31,7 @@ public class SQLMiddleMan {
 
 	public void deleteCustomer(Customer cust) {
 		try {
-			st.execute(String.format("DELETE FROM EMPLOYEE WHERE SSN = '%s'",
+			st.execute(String.format("DELETE FROM CUSTOMER WHERE ID = '%s'",
 					cust.getID()));
 		} catch (SQLException e) {
 			e.printStackTrace();
