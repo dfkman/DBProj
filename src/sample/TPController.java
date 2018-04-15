@@ -146,32 +146,32 @@ public class TPController {
 			grid.add(new Label("Num of Baths"), 0, 7);
 			Platform.runLater(() -> addr.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
-				if (dialogButton == savButtonType){
-					if(!((String)cust.getValue()).equalsIgnoreCase("Select a Customer...")){
-					ArrayList<String> Result = new ArrayList<>();
-					Result.add(addr.getText());
-					Result.add(sqft.getText());
-					int slash = cust.getValue().toString().indexOf("/");
-					if(slash < 0)
-						slash = cust.getValue().toString().length();
-					Result.add((cust.getValue().toString().substring(0, slash)));
-					Result.add(nbed.getText());
-					Result.add(nbath.getText());
-					Result.add(listp.getText());
-					Property added = new Property(Result.get(0), Result.get(2),Result.get(1), Result.get(5), Result.get(3), Result.get(4));
-					data.remove(prop);
-					data.add(added);
-					mm.updateProperty(prop, added);
-					return Result;
-					}
-					else{
-						Alert invalidCustomer = new Alert(Alert.AlertType.ERROR,
-								"Please select a customer", ButtonType.OK);
-						invalidCustomer.showAndWait();
-						adddiag.showAndWait();
-					}
-				}
-				
+				if (dialogButton == savButtonType) {
+                    if (!((String) cust.getValue()).equalsIgnoreCase("Select a" +
+                            " Customer...")) {
+                        ArrayList<String> Result = new ArrayList<>();
+                        Result.add(addr.getText());
+                        Result.add(sqft.getText());
+                        int slash = cust.getValue().toString().indexOf("/");
+                        if (slash < 0)
+                            slash = cust.getValue().toString().length();
+                        Result.add((cust.getValue().toString().substring(0, slash)));
+                        Result.add(nbed.getText());
+                        Result.add(nbath.getText());
+                        Result.add(listp.getText());
+                        Property added = new Property(Result.get(0), Result.get
+                                (2), Result.get(1), Result.get(5), Result.get(3), Result.get(4));
+                        data.remove(prop);
+                        data.add(added);
+                        mm.updateProperty(prop, added);
+                        return Result;
+                    } else {
+                        Alert invalidCustomer = new Alert(Alert.AlertType.ERROR,
+                                "Please select a customer", ButtonType.OK);
+                        invalidCustomer.showAndWait();
+                        adddiag.showAndWait();
+                    }
+                }
 				return null;
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();

@@ -74,6 +74,9 @@ public class CTController {
 			"You found an unconsidered error. Congratulations",
 			ButtonType.OK);
 
+	public static final Alert emptyInputAlert = new Alert(Alert.AlertType
+			.ERROR, "All fields must contain useful values", ButtonType.OK);
+
 	public CTController(Main mod, SQLMiddleMan mm) {
 		model = mod;
 		this.mm = mm;
@@ -124,6 +127,11 @@ public class CTController {
 			Platform.runLater(() -> name.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType){
+					if (name.getText().trim().isEmpty() || phone.getText()
+							.trim().isEmpty()) {
+						emptyInputAlert.showAndWait();
+						return null;
+					}
 					ArrayList<String> Result = new ArrayList<>();
 					Result.add(name.getText());
 					Result.add(phone.getText());
@@ -138,7 +146,7 @@ public class CTController {
 				return null;
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
-			if (newEntry != null) {
+			if (newEntry.isPresent()) {
 				data.add(new Customer(newEntry.get().get(2), newEntry.get()
 						.get(0), newEntry.get().get(1)));
 			}
@@ -174,6 +182,11 @@ public class CTController {
 				Platform.runLater(() -> name.requestFocus());
 				adddiag.setResultConverter(dialogButton -> {
 					if (dialogButton == savButtonType) {
+						if (name.getText().trim().isEmpty() || phone.getText()
+								.trim().isEmpty()) {
+							emptyInputAlert.showAndWait();
+							return null;
+						}
 						Customer oldCust = new Customer(cust.getID(), cust.getName(),
 								cust.getPnumber());
 						ArrayList<String> Result = new ArrayList<>();

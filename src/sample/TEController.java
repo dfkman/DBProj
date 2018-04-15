@@ -126,6 +126,11 @@ public class TEController {
 			Platform.runLater(() -> name.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType) {
+					if (name.getText().trim().isEmpty() || phone.getText()
+							.trim().isEmpty() || SSN.getText().trim().isEmpty()) {
+						CTController.emptyInputAlert.showAndWait();
+						return null;
+					}
 					ArrayList<String> Result = new ArrayList<>();
 					Result.add(SSN.getText());
 					Result.add(name.getText());
@@ -152,7 +157,7 @@ public class TEController {
 				return null;
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
-			if (newEntry != null) {
+			if (newEntry.isPresent()) {
 				data.add(new Employee(newEntry.get().get(0), newEntry.get().get
 						(1),newEntry.get().get(2)));
 			}
@@ -187,6 +192,11 @@ public class TEController {
 				Platform.runLater(() -> name.requestFocus());
 				adddiag.setResultConverter(dialogButton -> {
 					if (dialogButton == savButtonType) {
+						if (name.getText().trim().isEmpty() || phone.getText()
+								.trim().isEmpty() || SSN.getText().trim().isEmpty()) {
+							CTController.emptyInputAlert.showAndWait();
+							return null;
+						}
 						Employee oldEmp = new Employee(emp.getSSN(), emp
 								.getName(), emp.getPnumber());
 						ArrayList<String> Result = new ArrayList<>();

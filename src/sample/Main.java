@@ -33,35 +33,40 @@ public class Main extends Application {
 					"test", "test");
 			st = conn.createStatement();
 			
-			/*
+
 			st.execute("DROP TABLE IF EXISTS EMPLOYEE");
-			st.execute("DROP TABLE IF EXISTS LAND");
-			st.execute("DROP TABLE IF EXISTS HOUSE");
 			st.execute("DROP TABLE IF EXISTS PROPERTY");
 			st.execute("DROP TABLE IF EXISTS CUSTOMER");
 			st.execute("DROP TABLE IF EXISTS APPOINTMENT");
 			st.execute("DROP TABLE IF EXISTS SALE");
-			*/
+
 
 			st.execute("CREATE TABLE IF NOT EXISTS EMPLOYEE(SSN CHAR(9) " +
-					"PRIMARY KEY, name VARCHAR(100), PHONE CHAR(10))");
+					"PRIMARY KEY, NAME VARCHAR(100), PHONE CHAR(10))");
+
 			st.execute("CREATE TABLE IF NOT EXISTS CUSTOMER(ID INT " +
-					"PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100), phone CHAR(10))");
+					"PRIMARY KEY AUTO_INCREMENT, NAME VARCHAR(100), PHONE " +
+					"CHAR(10))");
+
 			st.execute("CREATE TABLE IF NOT EXISTS PROPERTY(ADDR VARCHAR" +
 					"(256) PRIMARY KEY, SELLER INT, LISTPRICE DECIMAL(10," +
 					"2), FOOTAGE INT, NBEDS TINYINT, NBATHS TINYINT, FOREIGN KEY (SELLER) REFERENCES CUSTOMER(ID))");
-			st.execute("CREATE TABLE IF NOT EXISTS APPOINTMENT(address " +
-					"VARCHAR(256), cid INT, sTime " +
-					"TIME, eTime TIME, refNum INT, eSSN char(9) "
-					+ ", PRIMARY KEY(address, cid), FOREIGN KEY (cid) REFERENCES CUSTOMER(ID),"
+
+			st.execute("CREATE TABLE IF NOT EXISTS APPOINTMENT(ADDRESS " +
+					"VARCHAR(256), CID INT, STIME " +
+					"TIME, ETIME TIME, REFNUM INT, ESSN CHAR(9), PRIMARY KEY" +
+					"(ADDRESS, CID, ESSN), FOREIGN KEY (CID) " +
+					"REFERENCES CUSTOMER(ID), FOREIGN KEY (ADDRESS) " +
+					"REFERENCES PROPERTY(ADDR),"
+					+ " FOREIGN KEY (ESSN) REFERENCES EMPLOYEE(SSN))");
+
+			st.execute("CREATE TABLE IF NOT EXISTS SALE(ADDRESS VARCHAR(256)" +
+					", PRICE DECIMAL(10, 2), SID INT, CID INT, ESSN char(9), "
+					+ "date DATETIME, REFNUM INT, PRIMARY KEY(ADDRESS, " +
+					"DATE), FOREIGN KEY (cID) REFERENCES CUSTOMER(ID), " +
+					"FOREIGN KEY (SID) REFERENCES CUSTOMER(ID), "
 					+ "FOREIGN KEY (eSSN) REFERENCES EMPLOYEE(SSN))");
-			st.execute("CREATE TABLE IF NOT EXISTS SALE(address VARCHAR(256)," +
-					" price DECIMAL(10, 2), sID INT"
-					+ ", cID INT,"
-					+ " eSSN char(9), "
-					+ "date DATETIME, refNum INT, PRIMARY KEY(ADDRESS, " +
-					"DATE), FOREIGN KEY (cID) REFERENCES CUSTOMER(ID),"
-					+ "FOREIGN KEY (eSSN) REFERENCES EMPLOYEE(SSN))");
+
 			System.out.println("tables loaded successfully");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
