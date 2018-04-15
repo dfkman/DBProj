@@ -56,6 +56,16 @@ public class SQLMiddleMan {
 		}
 	}
 	
+	public void deleteAppointment(Appointment apt){
+		try {
+			st.execute(String.format("DELETE FROM Appointment WHERE address = '%s' AND "
+					+ "cid = %s AND ESSN = '%s'",
+					apt.getProperty(),apt.getBuyer(),apt.getEmployee()));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void loadEmpData(ObservableList<Employee> data) {
 		try {
 			ResultSet rs = st.executeQuery("SELECT * FROM EMPLOYEE");
@@ -139,6 +149,24 @@ public class SQLMiddleMan {
 		}
 	}
 
+	public void loadAptData(ObservableList<Appointment> data){
+		try {
+			ResultSet rs = st.executeQuery("SELECT * FROM APPOINTMENT");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				data.add(new Appointment(rs.getString(6), rs.getString(2), rs
+						.getString(1), rs.getString(5), rs.getString(3),
+						rs.getString(4)));
+				rs.next();
+			}
+		} catch(SQLException e) {
+			if (e.getMessage().contains("No data is available")) {
+				return;
+			}
+			e.printStackTrace();
+		}
+	}
+	
 	public int addEmployee(Employee emp) {
 		try {
 			ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM EMPLOYEE " +
@@ -201,6 +229,19 @@ public class SQLMiddleMan {
 			st.execute(String.format("INSERT INTO SALE (ADDRESS, PRICE, sID, CID, ESSN, DATE, REFNUM) VALUES (" +
 					"'%s', %s,%s,%s,'%s','%s', %s);", sale.getProp(), sale.getPrice(),sale.getSeller(),
 					sale.getBuyer(),sale.getEmp(),sale.getDate(),sale.getRefNum()));
+			ResultSet rs = st.executeQuery("CALL SCOPE_IDENTITY()");
+			rs.first();
+			return;
+	} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void addApt(Appointment apt){
+		try {
+			st.execute(String.format("INSERT INTO APPOINTMENT (ADDRESS, CID, STIME, ETIME, ESSN, REFNUM) VALUES (" +
+					"'%s', %s,'%s','%s','%s',%s);", apt.getProperty(),apt.getBuyer(),apt.getStart(),
+					apt.getEnd(), apt.getEmployee(), apt.getRefnum()));
 			ResultSet rs = st.executeQuery("CALL SCOPE_IDENTITY()");
 			rs.first();
 			return;
@@ -294,6 +335,21 @@ public class SQLMiddleMan {
 			+ "date = '%s', refnum = %s WHERE ADDRESS = '%s' AND DATE = '%s'",
 			update.getProp(),update.getBuyer(),update.getSeller(),update.getEmp(),
 			update.getDate(), update.getRefNum(),old.getProp(), old.getDate()));
+			return;
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	}
+	
+	public void updateApt(Appointment old, Appointment update){
+		try {
+			st.execute(String.format("UPDATE APPOINTMENT SET " +
+			"address = '%s', cid = %s, ESSN = %s,"
+			+ "STIME = '%s', ETIME = '%s', REFNUM = %s"
+			+ " WHERE ADDRESS = '%s' AND cid = %s AND ESSN = %s",
+			update.getProperty(),update.getBuyer(),update.getEmployee(),update.getStart(),
+			update.getEnd(), update.getRefnum(),old.getProperty(), old.getBuyer(),
+			old.getEmployee()));
 			return;
 	} catch (SQLException e) {
 		e.printStackTrace();
