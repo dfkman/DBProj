@@ -8,10 +8,10 @@ public class Customer {
 	private SimpleStringProperty ID;
 	private boolean isEdited;
 	
-	public Customer(String Name, String phone, String id) {
-		this.name.set(Name);
-		this.pnumber.set(phone);
+	public Customer(String id, String name, String phone) {
 		this.ID.set(id);
+		this.name.set(name);
+		this.pnumber.set(phone);
 		isEdited = false;
 	}
 	

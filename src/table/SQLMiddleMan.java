@@ -20,23 +20,19 @@ public class SQLMiddleMan {
 		this.st = st;
 	}
 
-	/**
-	 * @param ar [name, phone]
-	 */
-	public void addCustomer(ArrayList<String> ar) {
+	public void deleteEmployee(Employee emp) {
 		try {
-			st.execute(String.format("INSERT INTO CUSTOMER VALUES (MAX" +
-					"(SELECT SSN FROM CUSTOMER) + 1, \'%s\'," +
-					"\'%s\');", ar.get(0), ar.get(1)));
+			st.execute("DELETE FROM EMPLOYEE WHERE SSN = \'" + emp.getSSN() +
+					"\'");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void deleteEmployee(Employee emp) {
+	public void deleteCustomer(Customer cust) {
 		try {
-			st.execute("DELETE FROM EMPLOYEE WHERE SSN = \'" + emp.getSSN() +
-					"\'");
+			st.execute(String.format("DELETE FROM EMPLOYEE WHERE SSN = '%s'",
+					cust.getID()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -56,6 +52,20 @@ public class SQLMiddleMan {
 		}
 	}
 
+	public void loadCustData(ObservableList<Customer> data) {
+		try {
+			ResultSet rs = st.executeQuery("SELECT * FROM CUSTOMER");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				data.add(new Customer(rs.getString(1), rs.getString(2), rs
+						.getString(3)));
+				rs.next();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public boolean addEmployee(Employee emp) {
 		try {
 			ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM EMPLOYEE " +
@@ -65,6 +75,23 @@ public class SQLMiddleMan {
 				st.execute("INSERT INTO EMPLOYEE VALUES (\'" + emp.getSSN() +
 						"\', \'" + emp.getName() + "\', \'" + emp.getPnumber
 						() + "\')");
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean addCustomer(Customer cust) {
+		try {
+			ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM CUSTOMER " +
+					"WHERE ID = " + cust.getID());
+			rs.first();
+			if (rs.getInt(1) == 0) {
+				st.execute(String.format("INSERT INTO CUSTOMER VALUES '%s', " +
+						"'%s', '%s');", cust.getID(), cust.getName(), cust
+						.getPnumber()));
 				return true;
 			}
 		} catch (SQLException e) {
@@ -91,6 +118,31 @@ public class SQLMiddleMan {
 						"\'");
 			}
 			return true;
+		} catch (SQLException e) {
+			if (e.getMessage().contains(PRIMARY_KEY_VIOLATION)) {
+				return false;
+			}
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateCustomer(Customer newCust, Customer oldCust) {
+		try {
+			if (!newCust.getID().equals(oldCust.getID())) {
+				st.execute(String.format("UPDATE CUSTOMER SET ID = '%s' " +
+						"WHERE ID = '%s');", newCust.getID(), oldCust.getID()));
+			}
+			if (!newCust.getName().equals(oldCust.getName())) {
+				st.execute(String.format("UPDATE CUSTOMER SET NAME = '%s' " +
+						"WHERE NAME = '%s');", newCust.getName(), oldCust
+						.getName()));
+			}
+			if (!newCust.getPnumber().equals(oldCust.getPnumber())) {
+				st.execute(String.format("UPDATE CUSTOMER SET PHONE = '%s' " +
+						"WHERE PHONE = '%s');", newCust.getPnumber(), oldCust
+						.getPnumber()));
+			}
 		} catch (SQLException e) {
 			if (e.getMessage().contains(PRIMARY_KEY_VIOLATION)) {
 				return false;

@@ -48,7 +48,6 @@ public class TEController {
 	
 	@FXML
 	private TableColumn namCol;
-
 	
 	@FXML
 	private TableColumn ponCol;
@@ -60,8 +59,8 @@ public class TEController {
 
 	private SQLMiddleMan mm;
 
-	private final Alert SSN_Exists_alert = new Alert(Alert.AlertType.ERROR, "An " +
-			"employee with this SSN already exists", ButtonType.OK);
+	private final Alert ssnExistsAlert = new Alert(Alert.AlertType.ERROR,
+			"An employee with this SSN already exists", ButtonType.OK);
 	
 	
 	public TEController(Main mod, SQLMiddleMan mm) {
@@ -123,7 +122,7 @@ public class TEController {
 					Result.add(phone.getText());
 					if (!mm.addEmployee(new Employee(SSN.getText(), name
 							.getText(), phone.getText()))) {
-						SSN_Exists_alert.showAndWait();
+						ssnExistsAlert.showAndWait();
 						return null;
 					}
 					return Result;
@@ -132,7 +131,7 @@ public class TEController {
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
 			if (newEntry != null) {
-				data.add(new Employee(newEntry.get().get(0),newEntry.get().get
+				data.add(new Employee(newEntry.get().get(0), newEntry.get().get
 						(1),newEntry.get().get(2)));
 			}
 		});
@@ -176,7 +175,7 @@ public class TEController {
 						emp.setName(name.getText());
 						emp.setPhone(phone.getText());
 						if (!mm.updateEmployee(emp, oldEmp)) {
-							SSN_Exists_alert.showAndWait();
+							ssnExistsAlert.showAndWait();
 							emp.setSSN(oldEmp.getSSN());
 							emp.setName(oldEmp.getName());
 							emp.setPhone(oldEmp.getPnumber());
