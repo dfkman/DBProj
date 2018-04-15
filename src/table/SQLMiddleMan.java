@@ -62,6 +62,9 @@ public class SQLMiddleMan {
 				rs.next();
 			}
 		} catch (SQLException e) {
+			if (e.getMessage().contains("No data is available")) {
+				return;
+			}
 			e.printStackTrace();
 		}
 	}
@@ -89,7 +92,7 @@ public class SQLMiddleMan {
 					"WHERE ID = " + cust.getID());
 			rs.first();
 			if (rs.getInt(1) == 0) {
-				st.execute(String.format("INSERT INTO CUSTOMER VALUES '%s', " +
+				st.execute(String.format("INSERT INTO CUSTOMER VALUES ('%s', " +
 						"'%s', '%s');", cust.getID(), cust.getName(), cust
 						.getPnumber()));
 				return true;
@@ -131,18 +134,19 @@ public class SQLMiddleMan {
 		try {
 			if (!newCust.getID().equals(oldCust.getID())) {
 				st.execute(String.format("UPDATE CUSTOMER SET ID = '%s' " +
-						"WHERE ID = '%s');", newCust.getID(), oldCust.getID()));
+						"WHERE ID = '%s'", newCust.getID(), oldCust.getID()));
 			}
 			if (!newCust.getName().equals(oldCust.getName())) {
 				st.execute(String.format("UPDATE CUSTOMER SET NAME = '%s' " +
-						"WHERE NAME = '%s');", newCust.getName(), oldCust
-						.getName()));
+						"WHERE NAME = '%s' AND ID = '%s'", newCust.getName(),
+						oldCust.getName(), newCust.getID()));
 			}
 			if (!newCust.getPnumber().equals(oldCust.getPnumber())) {
 				st.execute(String.format("UPDATE CUSTOMER SET PHONE = '%s' " +
-						"WHERE PHONE = '%s');", newCust.getPnumber(), oldCust
-						.getPnumber()));
+						"WHERE PHONE = '%s' AND ID = '%s'", newCust
+						.getPnumber(), oldCust.getPnumber(), newCust.getID()));
 			}
+			return true;
 		} catch (SQLException e) {
 			if (e.getMessage().contains(PRIMARY_KEY_VIOLATION)) {
 				return false;
@@ -151,16 +155,6 @@ public class SQLMiddleMan {
 		}
 		return false;
 	}
-
-	/*
-	public void addEmployee(ar) {
-		try {
-			st.execute(String.format());
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 	
 	//Loads the customer names/ids
 	public ObservableList<String> loadCust(){
@@ -178,7 +172,8 @@ public class SQLMiddleMan {
 		}
 		return cust;
 	}
-	public ObservableList<String> loadEmployee(){
+
+	public ObservableList<String> loadEmployee() {
 		ObservableList<String> emp = FXCollections.observableArrayList();
 		emp.add("Select an Employee...");
 		try {
@@ -193,7 +188,8 @@ public class SQLMiddleMan {
 		}
 		return emp;
 	}
-	public ObservableList<String> loadProperty(){
+
+	public ObservableList<String> loadProperty() {
 		ObservableList<String> prop= FXCollections.observableArrayList();
 		prop.add("Select a Property...");
 		try {

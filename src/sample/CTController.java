@@ -106,7 +106,7 @@ public class CTController {
 			TextField phone = new TextField();
 			phone.setPromptText("phone");
 			grid.add(new Label("ID"), 0, 0);
-			grid.add(id, 0, 0);
+			grid.add(id, 1, 0);
 			grid.add(new Label("Name:"), 0, 1);
 			grid.add(name, 1, 1);
 			grid.add(new Label("Phone:"), 0, 2);
@@ -149,13 +149,13 @@ public class CTController {
 				grid.setVgap(10);
 				grid.setPadding(new Insets(20, 150, 10, 10));
 				TextField id = new TextField();
-				id.setPromptText("customer ID");
+				id.setText(cust.getID());
 				TextField name = new TextField();
-				name.setPromptText("name");
+				name.setText(cust.getName());
 				TextField phone = new TextField();
-				phone.setPromptText("phone");
-				grid.add(new Label("ID"), 0, 0);
-				grid.add(id, 0, 0);
+				phone.setText(cust.getPnumber());
+				grid.add(new Label("ID:"), 0, 0);
+				grid.add(id, 1, 0);
 				grid.add(new Label("Name:"), 0, 1);
 				grid.add(name, 1, 1);
 				grid.add(new Label("Phone:"), 0, 2);
@@ -164,8 +164,8 @@ public class CTController {
 				Platform.runLater(() -> name.requestFocus());
 				adddiag.setResultConverter(dialogButton -> {
 					if (dialogButton == savButtonType) {
-						Customer oldCust = new Customer(id.getText(), name
-								.getText(), phone.getText());
+						Customer oldCust = new Customer(cust.getID(), cust.getName(),
+								cust.getPnumber());
 						ArrayList<String> Result = new ArrayList<>();
 						Result.add(id.getText());
 						Result.add(name.getText());
@@ -185,6 +185,7 @@ public class CTController {
 					}
 					return null;
 				});
+				Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
 			}
 		});
 		Del.setOnAction(event -> {

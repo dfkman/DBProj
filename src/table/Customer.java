@@ -9,9 +9,9 @@ public class Customer {
 	private boolean isEdited;
 	
 	public Customer(String id, String name, String phone) {
-		this.ID.set(id);
-		this.name.set(name);
-		this.pnumber.set(phone);
+		this.ID = new SimpleStringProperty(id);
+		this.name = new SimpleStringProperty(name);
+		this.pnumber = new SimpleStringProperty(phone);
 		isEdited = false;
 	}
 	
