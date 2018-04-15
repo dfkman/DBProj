@@ -32,6 +32,7 @@ import table.SQLMiddleMan;
  * Controler for customer
  */
 public class CTController {
+
 	@FXML 
 	private Button ba;
 	
@@ -89,6 +90,7 @@ public class CTController {
 		ObservableList<Customer> data = FXCollections.observableArrayList();
 		mm.loadCustData(data);
 		TabView.setItems(data);
+
 		ba.setOnAction(event -> {
 			try {
 				model.swapScene('m');
@@ -97,6 +99,7 @@ public class CTController {
 				e.printStackTrace();
 			}
 		});
+
 		add.setOnAction(event -> {
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
 			adddiag.setTitle("Add/Edit an Customer...");	
@@ -140,6 +143,7 @@ public class CTController {
 						.get(0), newEntry.get().get(1)));
 			}
 		});
+
 		Edit.setOnAction(event -> {
 			Customer cust = (Customer) TabView.getSelectionModel().getSelectedItem();
 			if (cust != null) {

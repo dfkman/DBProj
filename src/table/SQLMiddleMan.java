@@ -48,6 +48,9 @@ public class SQLMiddleMan {
 				rs.next();
 			}
 		} catch (SQLException e) {
+			if (e.getMessage().contains("No data is available")) {
+				return;
+			}
 			e.printStackTrace();
 		}
 	}
@@ -82,6 +85,24 @@ public class SQLMiddleMan {
 		}
 	}
 
+	public void loadPropertyData(ObservableList<Property> data) {
+		try {
+			ResultSet rs = st.executeQuery("SELECT * FROM PROPERTY");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				data.add(new Property(rs.getString(1), rs.getString(2), rs
+						.getString(3), rs.getString(4), rs.getString(5),
+						rs.getString(6)));
+				rs.next();
+			}
+		} catch(SQLException e) {
+			if (e.getMessage().contains("No data is available")) {
+				return;
+			}
+			e.printStackTrace();
+		}
+	}
+
 	public int addEmployee(Employee emp) {
 		try {
 			ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM EMPLOYEE " +
@@ -103,9 +124,12 @@ public class SQLMiddleMan {
 			else if (e.getMessage().contains(PRIMARY_KEY_VIOLATION)) {
 				return 3;
 			}
+			else if (e.getMessage().contains("expected \"ALL, ANY, SOME\"")) {
+				return 4;
+			}
 			e.printStackTrace();
 		}
-		return 4;
+		return 5;
 	}
 	
 	public String addProperty(Property prop, boolean isHouse){
@@ -128,6 +152,8 @@ public class SQLMiddleMan {
 		}
 	}
 
+
+
 	public String addCustomer(String name, String phone) {
 		try {
 				st.execute(String.format("INSERT INTO CUSTOMER (NAME, PHONE) VALUES (" +
@@ -136,8 +162,8 @@ public class SQLMiddleMan {
 				rs.first();
 				return rs.getString(1);
 		} catch (SQLException e) {
-		return null;
-	}
+			return null;
+		}
 	}
 
 	public int updateEmployee(Employee newEmp, Employee oldEmp) {
@@ -206,7 +232,7 @@ public class SQLMiddleMan {
 	}
 	
 	//Loads the customer names/ids
-	public ObservableList<String> loadCust(){
+	public ObservableList<String> loadCust() {
 		ObservableList<String> cust = FXCollections.observableArrayList();
 		cust.add("Select a Customer...");
 		try {

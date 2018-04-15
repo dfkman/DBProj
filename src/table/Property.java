@@ -11,12 +11,12 @@ public class Property {
 	private boolean isEdited; 
 
 	public Property(String addr, String seller, String sqft, String listing, String bed, String bath) {
-		this.addr.set(addr);
-		this.seller.set(seller);
-		this.sqft.set(sqft);
-		this.listP.set(listing);
-		this.nbed.set(bed);
-		this.nbath.set(bath);
+		this.addr = new SimpleStringProperty(addr);
+		this.seller = new SimpleStringProperty(seller);
+		this.sqft = new SimpleStringProperty(sqft);
+		this.listP = new SimpleStringProperty(listing);
+		this.nbed = new SimpleStringProperty(bed);
+		this.nbath = new SimpleStringProperty(bath);
 		isEdited = false;
 	}
 	
@@ -24,6 +24,7 @@ public class Property {
 		//save function for going back to sql
 		isEdited = false;
 	}
+
 	public String getAddr(){
 		return addr.get();
 	}

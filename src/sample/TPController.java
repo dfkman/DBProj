@@ -13,15 +13,19 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 import javafx.scene.control.*;
-import javafx.scene.control.ButtonBar.ButtonData; 
+import javafx.scene.control.ButtonBar.ButtonData;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
+import table.Property;
 import table.SQLMiddleMan;
 
 /**
@@ -30,10 +34,30 @@ import table.SQLMiddleMan;
 public class TPController {
 	@FXML 
 	private Button Ba;
+
+	@FXML
+    private TableColumn TypeCol;
+
+    @FXML
+    private TableColumn AddrCol;
+
+    @FXML
+    private TableColumn PriceCol;
+
+    @FXML
+    private TableColumn SqFtCol;
+
+    @FXML
+    private TableColumn BedCol;
+
+    @FXML
+    private TableColumn BathCol;
 	
 	@FXML
 	private Button Add;
+
 	private Main model;
+
 	private SQLMiddleMan mm;
 	
 	
@@ -43,7 +67,22 @@ public class TPController {
 	}
 	
 	@FXML
-	private void initialize() throws IOException{
+	private void initialize() throws IOException {
+        TypeCol.setCellValueFactory(new PropertyValueFactory<Property,
+                String>("Type"));
+        AddrCol.setCellValueFactory(new PropertyValueFactory<Property,
+                String>("Address"));
+        PriceCol.setCellValueFactory(new PropertyValueFactory<Property,
+                String>("Price"));
+        SqFtCol.setCellValueFactory(new PropertyValueFactory<Property,
+                String>("Square Feet"));
+        BedCol.setCellValueFactory(new PropertyValueFactory<Property,
+                String>("Beds"));
+        BathCol.setCellValueFactory(new PropertyValueFactory<Property,
+                String>("Baths"));
+        ObservableList<Property> data = FXCollections.observableArrayList();
+        mm.loadPropertyData(data);
+
 		Ba.setOnAction(event -> {
 			try {
 				model.swapScene('m');
@@ -52,6 +91,7 @@ public class TPController {
 				e.printStackTrace();
 			}
 		});
+
 		Add.setOnAction(event -> {
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
 			adddiag.setTitle("Add/Edit Property...");	
