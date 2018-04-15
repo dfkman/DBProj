@@ -60,7 +60,17 @@ public class TEController {
 	private SQLMiddleMan mm;
 
 	private final Alert ssnExistsAlert = new Alert(Alert.AlertType.ERROR,
-			"An employee with this SSN already exists", ButtonType.OK);
+			"A customer with this SSN already exists", ButtonType.OK);
+
+	private final Alert nameTooLongAlert = new Alert(Alert.AlertType.ERROR,
+			"You put in too long of a name", ButtonType.OK);
+
+	private final Alert phoneTooLongAlert = new Alert(Alert.AlertType.ERROR,
+			"You entered to long of a phone number. 10 max.", ButtonType.OK);
+
+	private final Alert breakAlert = new Alert(Alert.AlertType.ERROR,
+			"You found an unconsidered error. Congratulations",
+			ButtonType.OK);
 	
 	
 	public TEController(Main mod, SQLMiddleMan mm) {
@@ -120,12 +130,24 @@ public class TEController {
 					Result.add(SSN.getText());
 					Result.add(name.getText());
 					Result.add(phone.getText());
-					if (!mm.addEmployee(new Employee(SSN.getText(), name
-							.getText(), phone.getText()))) {
-						ssnExistsAlert.showAndWait();
-						return null;
+					int ret = mm.addEmployee(new Employee(SSN.getText(), name
+							.getText(), phone.getText()));
+					switch (ret) {
+						case 0:
+							return Result;
+						case 1:
+							phoneTooLongAlert.showAndWait();
+							break;
+						case 2:
+							nameTooLongAlert.showAndWait();
+							break;
+						case 3:
+							ssnExistsAlert.showAndWait();
+							break;
+						default:
+							breakAlert.showAndWait();
+							break;
 					}
-					return Result;
 				}
 				return null;
 			});
@@ -174,8 +196,22 @@ public class TEController {
 						emp.setSSN(SSN.getText());
 						emp.setName(name.getText());
 						emp.setPhone(phone.getText());
-						if (!mm.updateEmployee(emp, oldEmp)) {
-							ssnExistsAlert.showAndWait();
+						int ret = mm.updateEmployee(emp, oldEmp);
+						if (ret != 0) {
+							switch (ret) {
+								case 1:
+									phoneTooLongAlert.showAndWait();
+									break;
+								case 2:
+									nameTooLongAlert.showAndWait();
+									break;
+								case 3:
+									ssnExistsAlert.showAndWait();
+									break;
+								default:
+									breakAlert.showAndWait();
+									break;
+							}
 							emp.setSSN(oldEmp.getSSN());
 							emp.setName(oldEmp.getName());
 							emp.setPhone(oldEmp.getPnumber());

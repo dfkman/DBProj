@@ -69,7 +69,7 @@ public class SQLMiddleMan {
 		}
 	}
 
-	public boolean addEmployee(Employee emp) {
+	public int addEmployee(Employee emp) {
 		try {
 			ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM EMPLOYEE " +
 					"WHERE SSN = " + emp.getSSN());
@@ -78,13 +78,23 @@ public class SQLMiddleMan {
 				st.execute("INSERT INTO EMPLOYEE VALUES (\'" + emp.getSSN() +
 						"\', \'" + emp.getName() + "\', \'" + emp.getPnumber
 						() + "\')");
-				return true;
+				return 0;
 			}
 		} catch (SQLException e) {
+			if (e.getMessage().contains("PHONE")) {
+				return 1;
+			}
+			else if (e.getMessage().contains("NAME")) {
+				return 2;
+			}
+			else if (e.getMessage().contains(PRIMARY_KEY_VIOLATION)) {
+				return 3;
+			}
 			e.printStackTrace();
 		}
-		return false;
+		return 4;
 	}
+
 
 	public String addCustomer(String name, String phone) {
 		try {
@@ -94,12 +104,11 @@ public class SQLMiddleMan {
 				rs.first();
 				return rs.getString(1);
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		return null;
 	}
+	}
 
-	public boolean updateEmployee(Employee newEmp, Employee oldEmp) {
+	public int updateEmployee(Employee newEmp, Employee oldEmp) {
 		try {
 			if (!newEmp.getSSN().equals(oldEmp.getSSN())) {
 				st.execute("UPDATE EMPLOYEE SET SSN = \'" + newEmp.getSSN()
@@ -116,17 +125,23 @@ public class SQLMiddleMan {
 						.getPnumber() + "\' AND SSN = \'" + newEmp.getSSN() +
 						"\'");
 			}
-			return true;
+			return 0;
 		} catch (SQLException e) {
-			if (e.getMessage().contains(PRIMARY_KEY_VIOLATION)) {
-				return false;
+			if (e.getMessage().contains("PHONE")) {
+				return 1;
+			}
+			else if (e.getMessage().contains("NAME")) {
+				return 2;
+			}
+			else if (e.getMessage().contains(PRIMARY_KEY_VIOLATION)) {
+				return 3;
 			}
 			e.printStackTrace();
 		}
-		return false;
+		return 4;
 	}
 
-	public boolean updateCustomer(Customer newCust, Customer oldCust) {
+	public int updateCustomer(Customer newCust, Customer oldCust) {
 		try {
 			if (!newCust.getID().equals(oldCust.getID())) {
 				st.execute(String.format("UPDATE CUSTOMER SET ID = '%s' " +
@@ -142,14 +157,20 @@ public class SQLMiddleMan {
 						"WHERE PHONE = '%s' AND ID = '%s'", newCust
 						.getPnumber(), oldCust.getPnumber(), newCust.getID()));
 			}
-			return true;
+			return 0;
 		} catch (SQLException e) {
-			if (e.getMessage().contains(PRIMARY_KEY_VIOLATION)) {
-				return false;
+			if (e.getMessage().contains("PHONE")) {
+				return 1;
+			}
+			else if (e.getMessage().contains("NAME")) {
+				return 2;
+			}
+			else if (e.getMessage().contains(PRIMARY_KEY_VIOLATION)) {
+				return 3;
 			}
 			e.printStackTrace();
 		}
-		return false;
+		return 4;
 	}
 	
 	//Loads the customer names/ids
