@@ -59,7 +59,7 @@ public class Main extends Application {
 					" price DECIMAL(10, 2), sID INT"
 					+ ", cID INT,"
 					+ " eSSN char(9), "
-					+ "date DATETIME, refNum INT, PRIMARY KEY(ADDRESS, " +
+					+ "date DATE, refNum INT, PRIMARY KEY(ADDRESS, " +
 					"DATE), FOREIGN KEY (cID) REFERENCES CUSTOMER(ID),"
 					+ "FOREIGN KEY (eSSN) REFERENCES EMPLOYEE(SSN))");
 			System.out.println("tables loaded successfully");

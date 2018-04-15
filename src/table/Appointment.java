@@ -34,7 +34,7 @@ public class Appointment {
 	public void setProperty(String newValue){
 		prop.set(newValue);
 	}
-	public void setRef(String newValue){
+	public void setRefnum(String newValue){
 		refnum.set(newValue);
 	}
 	public void setStart(String newValue){
@@ -48,6 +48,15 @@ public class Appointment {
 	}
 	public String getBuyer(){
 		return buyer.get();
+	}
+	public String getRefnum(){
+		return refnum.get();
+	}
+	public String getStart(){
+		return sdate.get();
+	}
+	public String getEnd(){
+		return edate.get();
 	}
 	public String getProperty(){
 		return prop.get();

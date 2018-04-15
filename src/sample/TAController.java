@@ -15,13 +15,17 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import javafx.scene.control.*;
-import javafx.scene.control.ButtonBar.ButtonData; 
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.util.ArrayList;
 import java.util.Optional;
 
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
+import table.Property;
+import table.Appointment;
 import table.SQLMiddleMan;
 
 /**
@@ -35,6 +39,29 @@ public class TAController {
 	
 	@FXML
 	private Button add;
+	
+	@FXML
+	private Button edit;
+	
+	@FXML
+	private Button del;
+	
+	@FXML
+	private TableView TabView;
+	
+	@FXML
+	private TableColumn Cust;
+	@FXML
+	private TableColumn Emp;
+	@FXML
+	private TableColumn Addr;
+	@FXML
+	private TableColumn Date;
+	@FXML
+	private TableColumn End;
+	@FXML
+	private TableColumn Ref;
+	
 	private Main model;
 	private SQLMiddleMan mm;
 	
@@ -45,6 +72,18 @@ public class TAController {
 	
 	@FXML
 	private void initialize() throws IOException {
+		Cust.setCellValueFactory(new PropertyValueFactory<Appointment,
+                String>("buyer"));
+		Addr.setCellValueFactory(new PropertyValueFactory<Appointment,
+                String>("prop"));
+		Emp.setCellValueFactory(new PropertyValueFactory<Appointment,
+                String>("employee"));
+		Date.setCellValueFactory(new PropertyValueFactory<Appointment,
+                String>("sdate"));
+		End.setCellValueFactory(new PropertyValueFactory<Appointment,
+                String>("edate"));
+		Ref.setCellValueFactory(new PropertyValueFactory<Appointment,
+                String>("refnum"));
 		ba.setOnAction(event -> {
 			try {
 				model.swapScene('m');
