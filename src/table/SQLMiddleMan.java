@@ -48,6 +48,9 @@ public class SQLMiddleMan {
 				rs.next();
 			}
 		} catch (SQLException e) {
+			if (e.getMessage().contains("No data is available")) {
+				return;
+			}
 			e.printStackTrace();
 		}
 	}
@@ -108,9 +111,12 @@ public class SQLMiddleMan {
 			else if (e.getMessage().contains(PRIMARY_KEY_VIOLATION)) {
 				return 3;
 			}
+			else if (e.getMessage().contains("expected \"ALL, ANY, SOME\"")) {
+				return 4;
+			}
 			e.printStackTrace();
 		}
-		return 4;
+		return 5;
 	}
 
 	public int addCustomer(Customer cust) {
@@ -134,9 +140,12 @@ public class SQLMiddleMan {
 			else if (e.getMessage().contains(PRIMARY_KEY_VIOLATION)) {
 				return 3;
 			}
+			else if (e.getMessage().contains("expected \"ALL, ANY, SOME\"")) {
+				return 4;
+			}
 			e.printStackTrace();
 		}
-		return 4;
+		return 5;
 	}
 
 	public int updateEmployee(Employee newEmp, Employee oldEmp) {
