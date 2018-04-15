@@ -38,6 +38,15 @@ public class SQLMiddleMan {
 		}
 	}
 
+	public void deleteProperty(Property prop){
+		try {
+			st.execute(String.format("DELETE FROM Property WHERE addr = '%s'",
+					prop.getAddr()));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void loadEmpData(ObservableList<Employee> data) {
 		try {
 			ResultSet rs = st.executeQuery("SELECT * FROM EMPLOYEE");

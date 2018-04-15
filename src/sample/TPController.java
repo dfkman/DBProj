@@ -16,6 +16,7 @@ import java.util.Optional;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.application.*;
+import table.Customer;
 import table.Property;
 import table.SQLMiddleMan;
 
@@ -49,6 +50,12 @@ public class TPController {
 	
 	@FXML
 	private Button Add;
+	
+	@FXML
+	private Button Edit;
+	
+	@FXML
+	private Button Del;
 
 	private Main model;
 
@@ -84,6 +91,15 @@ public class TPController {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		});
+		
+		Del.setOnAction(event -> {
+			Property prop = (Property)TabView.getSelectionModel()
+					.getSelectedItem();
+			if (prop != null) {
+				mm.deleteProperty(prop);
+				data.remove(prop);
 			}
 		});
 

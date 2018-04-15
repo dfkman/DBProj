@@ -62,7 +62,7 @@ public class Main extends Application {
 					+ "date DATETIME, refNum INT, PRIMARY KEY(ADDRESS, " +
 					"DATE), FOREIGN KEY (cID) REFERENCES CUSTOMER(ID),"
 					+ "FOREIGN KEY (eSSN) REFERENCES EMPLOYEE(SSN))");
-			System.out.println("tables created successfully");
+			System.out.println("tables loaded successfully");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
