@@ -123,7 +123,7 @@ public class TEController {
 			grid.add(new Label("Phone:"), 0, 2);
 			grid.add(phone, 1, 2);
 			adddiag.getDialogPane().setContent(grid);
-			Platform.runLater(() -> name.requestFocus());
+			Platform.runLater(() -> SSN.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType) {
 					if (name.getText().trim().isEmpty() || phone.getText()

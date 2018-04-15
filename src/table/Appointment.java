@@ -13,12 +13,12 @@ public class Appointment {
 	
 	public Appointment(String emp, String buy, String prop, String
 			ref, String sdate, String edate) {
-		this.employee.set(emp);
-		this.buyer.set(buy);
-		this.prop.set(prop);
-		this.refnum.set(ref);
-		this.sdate.set(sdate);
-		this.edate.set(edate);
+		this.employee = new SimpleStringProperty(emp);
+		this.buyer = new SimpleStringProperty(buy);
+		this.prop = new SimpleStringProperty(prop);
+		this.refnum = new SimpleStringProperty(ref);
+		this.sdate = new SimpleStringProperty(sdate);
+		this.edate = new SimpleStringProperty(edate);
 		this.isEdited = false;
 	}
 	public void saveToTable() {
