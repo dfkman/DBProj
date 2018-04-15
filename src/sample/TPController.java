@@ -4,15 +4,6 @@ import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 import javafx.scene.control.*;
@@ -130,14 +121,6 @@ public class TPController {
 			grid.add(new Label("Seller:"), 0, 3);
 			grid.add(cust, 1, 3);
 			adddiag.getDialogPane().setContent(grid);
-			final ToggleGroup group = new ToggleGroup();
-			RadioButton rb1 = new RadioButton("House");
-			rb1.setToggleGroup(group);
-			rb1.setSelected(true);
-			RadioButton rb2 = new RadioButton("Land");
-			rb2.setToggleGroup(group);
-			grid.add(rb1, 1, 4);
-			grid.add(rb2, 1, 5);
 			grid.add(nbed, 1, 6);
 			grid.add(new Label("Num of Beds"), 0, 6);
 			grid.add(nbath, 1, 7);
@@ -145,12 +128,23 @@ public class TPController {
 			Platform.runLater(() -> addr.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType){
+					if(!((String)cust.getValue()).equalsIgnoreCase("Select a Customer...")){
 					ArrayList<String> Result = new ArrayList<>();
 					Result.add(addr.getText());
 					Result.add(sqft.getText());
-					Result.add((String) cust.getValue());
-					System.out.println(Result.get(2));
+					Result.add((cust.getValue().toString().substring(0, cust.getValue().toString().indexOf("/"))));
+					Result.add(nbed.getText());
+					Result.add(nbath.getText());
+					Result.add(listp.getText());
+					data.add(new Property(Result.get(0), Result.get(2),Result.get(1), Result.get(5), Result.get(3), Result.get(4)));
 					return Result;
+					}
+					else{
+						Alert invalidCustomer = new Alert(Alert.AlertType.ERROR,
+								"Please select a customer", ButtonType.OK);
+						invalidCustomer.showAndWait();
+						adddiag.showAndWait();
+					}
 				}
 				return null;
 			});
