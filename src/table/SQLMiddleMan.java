@@ -234,6 +234,19 @@ public class SQLMiddleMan {
 		return 4;
 	}
 	
+	public void updateProperty(Property old, Property update){
+		try {
+			st.execute(String.format("UPDATE PROPERTY SET " +
+			"addr = '%s', seller = '%s', listprice = '%s', footage = '%s',"
+			+ "nbeds = '%s', nbaths = '%s' WHERE ADDR = '%s'",
+			update.getAddr(),update.getSeller(),update.getListP(),update.getSqft(),
+			update.getNbed(), update.getNbath(),old.getAddr()));
+			return;
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	}
+	
 	//Loads the customer names/ids
 	public ObservableList<String> loadCust() {
 		ObservableList<String> cust = FXCollections.observableArrayList();

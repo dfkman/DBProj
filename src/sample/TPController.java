@@ -102,6 +102,81 @@ public class TPController {
 				data.remove(prop);
 			}
 		});
+		
+		Edit.setOnAction(event -> {
+			Property prop = (Property) TabView.getSelectionModel().
+					getSelectedItem();
+			if (prop != null){
+			Dialog<ArrayList<String>> adddiag = new Dialog<>();
+			adddiag.setTitle("Add/Edit Property...");	
+			adddiag.setHeaderText("Add or Edit a Property's data");
+			ButtonType savButtonType = new ButtonType("Save", ButtonData
+					.OK_DONE);
+			adddiag.getDialogPane().getButtonTypes().addAll(savButtonType,
+					ButtonType.CANCEL);
+			GridPane grid = new GridPane();
+			grid.setHgap(10);
+			grid.setVgap(10);
+			grid.setPadding(new Insets(20, 150, 10, 10));
+			TextField addr = new TextField();
+			addr.setText(prop.getAddr());
+			TextField sqft = new TextField();
+			sqft.setText(prop.getSqft());
+			TextField listp = new TextField();
+			listp.setText(prop.getListP());
+			TextField nbed = new TextField();
+			nbed.setText(prop.getNbed());
+			TextField nbath = new TextField();
+			nbath.setText(prop.getNbath());
+			ObservableList<String> options = mm.loadCust();
+			final ComboBox cust = new ComboBox(options);
+			cust.setValue(prop.getSeller());
+			grid.add(new Label("Address:"), 0, 0);
+			grid.add(addr, 1, 0);
+			grid.add(new Label("Sq. Footage:"), 0, 1);
+			grid.add(sqft, 1, 1);
+			grid.add(new Label("List Price"), 0, 2);
+			grid.add(listp, 1, 2);
+			grid.add(new Label("Seller:"), 0, 3);
+			grid.add(cust, 1, 3);
+			adddiag.getDialogPane().setContent(grid);
+			grid.add(nbed, 1, 6);
+			grid.add(new Label("Num of Beds"), 0, 6);
+			grid.add(nbath, 1, 7);
+			grid.add(new Label("Num of Baths"), 0, 7);
+			Platform.runLater(() -> addr.requestFocus());
+			adddiag.setResultConverter(dialogButton -> {
+				if (dialogButton == savButtonType){
+					if(!((String)cust.getValue()).equalsIgnoreCase("Select a Customer...")){
+					ArrayList<String> Result = new ArrayList<>();
+					Result.add(addr.getText());
+					Result.add(sqft.getText());
+					int slash = cust.getValue().toString().indexOf("/");
+					if(slash < 0)
+						slash = cust.getValue().toString().length();
+					Result.add((cust.getValue().toString().substring(0, slash)));
+					Result.add(nbed.getText());
+					Result.add(nbath.getText());
+					Result.add(listp.getText());
+					Property added = new Property(Result.get(0), Result.get(2),Result.get(1), Result.get(5), Result.get(3), Result.get(4));
+					data.remove(prop);
+					data.add(added);
+					mm.updateProperty(prop, added);
+					return Result;
+					}
+					else{
+						Alert invalidCustomer = new Alert(Alert.AlertType.ERROR,
+								"Please select a customer", ButtonType.OK);
+						invalidCustomer.showAndWait();
+						adddiag.showAndWait();
+					}
+				}
+				
+				return null;
+			});
+			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
+			}
+		});
 
 		Add.setOnAction(event -> {
 			Dialog<ArrayList<String>> adddiag = new Dialog<>();
