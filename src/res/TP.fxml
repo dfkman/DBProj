@@ -10,12 +10,12 @@
          <children>
             <TableView prefHeight="200.0" prefWidth="565.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Type" />
-                <TableColumn prefWidth="230.0" text="Addr" />
-                  <TableColumn minWidth="0.0" prefWidth="66.0" text="Price" />
-                  <TableColumn prefWidth="60.0" text="SqFt" />
-                  <TableColumn prefWidth="62.0" text="Bed" />
-                  <TableColumn prefWidth="110.0" text="Bath" />
+                <TableColumn fx:id="TypeCol" prefWidth="75.0" text="Type" />
+                <TableColumn fx:id="AddrCol" prefWidth="230.0" text="Addr" />
+                  <TableColumn fx:id="PriceCol" minWidth="0.0" prefWidth="66.0" text="Price" />
+                  <TableColumn fx:id="SqFtCol" prefWidth="60.0" text="SqFt" />
+                  <TableColumn fx:id="BedCol" prefWidth="62.0" text="Bed" />
+                  <TableColumn fx:id="BathCol" prefWidth="110.0" text="Bath" />
               </columns>
             </TableView>
             <GridPane>

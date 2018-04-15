@@ -69,6 +69,22 @@ public class SQLMiddleMan {
 		}
 	}
 
+	public void loadPropertyData(ObservableList<Property> data) {
+		try {
+			ResultSet rs = st.executeQuery("SELECT * FROM LAND");
+			rs.first();
+
+
+
+
+		} catch(SQLException e) {
+			if (e.getMessage().contains("No data is available")) {
+				return;
+			}
+			e.printStackTrace();
+		}
+	}
+
 	public int addEmployee(Employee emp) {
 		try {
 			ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM EMPLOYEE " +
@@ -187,7 +203,7 @@ public class SQLMiddleMan {
 	}
 	
 	//Loads the customer names/ids
-	public ObservableList<String> loadCust(){
+	public ObservableList<String> loadCust() {
 		ObservableList<String> cust = FXCollections.observableArrayList();
 		cust.add("Select a Customer...");
 		try {
