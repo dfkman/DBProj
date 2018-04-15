@@ -63,6 +63,16 @@ public class CTController {
 	private final Alert idExistsAlert = new Alert(Alert.AlertType.ERROR,
 			"A customer with this ID already exists", ButtonType.OK);
 
+	private final Alert nameTooLongAlert = new Alert(Alert.AlertType.ERROR,
+			"You put in too long of a name", ButtonType.OK);
+
+	private final Alert phoneTooLongAlert = new Alert(Alert.AlertType.ERROR,
+			"You entered to long of a phone number. 10 max.", ButtonType.OK);
+
+	private final Alert breakAlert = new Alert(Alert.AlertType.ERROR,
+			"You found an unconsidered error. Congratulations",
+			ButtonType.OK);
+
 	public CTController(Main mod, SQLMiddleMan mm) {
 		model = mod;
 		this.mm = mm;
@@ -119,12 +129,24 @@ public class CTController {
 					Result.add(id.getText());
 					Result.add(name.getText());
 					Result.add(phone.getText());
-					if (!mm.addCustomer(new Customer(id.getText(), name
-							.getText(), phone.getText()))) {
-						idExistsAlert.showAndWait();
-						return null;
+					int ret = mm.addCustomer(new Customer(id.getText(), name
+							.getText(), phone.getText()));
+					switch (ret) {
+						case 0:
+							return Result;
+						case 1:
+							phoneTooLongAlert.showAndWait();
+							break;
+						case 2:
+							nameTooLongAlert.showAndWait();
+							break;
+						case 3:
+							idExistsAlert.showAndWait();
+							break;
+						default:
+							breakAlert.showAndWait();
+							break;
 					}
-					return Result;
 				}
 				return null;
 			});
@@ -173,8 +195,22 @@ public class CTController {
 						cust.setID(id.getText());
 						cust.setName(name.getText());
 						cust.setPnumber(phone.getText());
-						if (!mm.updateCustomer(cust, oldCust)) {
-							idExistsAlert.showAndWait();
+						int ret = mm.updateCustomer(cust, oldCust);
+						if (ret != 0) {
+							switch (ret) {
+								case 1:
+									phoneTooLongAlert.showAndWait();
+									break;
+								case 2:
+									nameTooLongAlert.showAndWait();
+									break;
+								case 3:
+									idExistsAlert.showAndWait();
+									break;
+								default:
+									breakAlert.showAndWait();
+									break;
+							}
 							cust.setID(oldCust.getID());
 							cust.setName(oldCust.getName());
 							cust.setPnumber(oldCust.getPnumber());
