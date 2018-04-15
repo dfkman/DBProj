@@ -41,12 +41,12 @@ public class Main extends Application {
 					"PRIMARY KEY, name VARCHAR(100), PHONE CHAR(10))");
 
 			st.execute("CREATE TABLE IF NOT EXISTS LAND(addr VARCHAR(256) " +
-					"PRIMARY KEY, listPrice DECIMAL(10, 2), status VARCHAR(6)," +
+					"PRIMARY KEY, listPrice DECIMAL(10, 2), sellerID INT FOREIGN KEY REFERENCES CUSTOMER(ID)," +
 					" footage INT)");
 
 			st.execute("CREATE TABLE IF NOT EXISTS HOUSE(addr VARCHAR(256) " +
 					"PRIMARY KEY, listPrice DECIMAL(10, 2)" +
-					", footage INT, nBeds TINYINT, nBaths TINYINT)");
+					", sellerID INT FOREIGN KEY REFERENCES CUSTOMER(ID) footage INT, nBeds TINYINT, nBaths TINYINT)");
 
 			st.execute("CREATE TABLE IF NOT EXISTS CUSTOMER(ID INT " +
 					"PRIMARY KEY, name VARCHAR(100), phone CHAR(10))");

@@ -51,6 +51,19 @@ public class SQLMiddleMan {
 			e.printStackTrace();
 		}
 	}
+	public void loadPropData(ObservableList<Property> data) {
+		try {
+			ResultSet rs = st.executeQuery("SELECT * FROM HOUSE");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				data.add(new Property(rs.getString(1),rs.getString(3),rs.getString(2),
+						rs.getString(4),rs.getString(5),rs.getString(6)));
+				rs.next();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void loadCustData(ObservableList<Customer> data) {
 		try {
@@ -94,7 +107,26 @@ public class SQLMiddleMan {
 		}
 		return 4;
 	}
-
+	
+	public String addProperty(Property prop, boolean isHouse){
+		try {
+			if(isHouse){
+			st.execute(String.format("INSERT INTO HOUSE (ADDR, LISTPRICE, sellerID, footage, nbeds, nbath) VALUES (" +
+					"'%s', '%s','%s','%s','%s','%s');", prop.getAddr(), prop.getListP(),prop.getSeller(),
+					prop.getSqft(),prop.getNbed(),prop.getNbath()));
+			}
+			else{
+			st.execute(String.format("INSERT INTO LAND (ADDR, LISTPRICE, sellerID, footage) VALUES (" +
+					"'%s', '%s','%s','%s');", prop.getAddr(), prop.getListP(),prop.getSeller(),
+						prop.getSqft()));
+			}
+			ResultSet rs = st.executeQuery("CALL SCOPE_IDENTITY()");
+			rs.first();
+			return rs.getString(1);
+	} catch (SQLException e) {
+			return null;
+		}
+	}
 
 	public String addCustomer(String name, String phone) {
 		try {
@@ -140,7 +172,7 @@ public class SQLMiddleMan {
 		}
 		return 4;
 	}
-
+	
 	public int updateCustomer(Customer newCust, Customer oldCust) {
 		try {
 			if (!newCust.getID().equals(oldCust.getID())) {
