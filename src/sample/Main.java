@@ -29,16 +29,13 @@ public class Main extends Application {
 		try {
 			Class.forName("org.h2.Driver");
 			// "jdbc:h2:~/{name of the database}", "username", "password"
-			Connection conn = DriverManager.getConnection("jdbc:h2:~/MarkDB",
+			Connection conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/MarkDB",
 					"test", "test");
 			st = conn.createStatement();
 			/*
 			st.execute("DROP TABLE IF EXISTS EMPLOYEE");
 			st.execute("DROP TABLE IF EXISTS LAND");
 			st.execute("DROP TABLE IF EXISTS HOUSE");
-			st.execute("DROP TABLE IF EXISTS CUSTOMER");
-			st.execute("DROP TABLE IF EXISTS APPOINTMENT");
-			st.execute("DROP TABLE IF EXISTS SALE");
 			*/
 			st.execute("CREATE TABLE IF NOT EXISTS EMPLOYEE(SSN CHAR(9) " +
 					"PRIMARY KEY, name VARCHAR(100), PHONE CHAR(10))");
@@ -51,7 +48,7 @@ public class Main extends Application {
 					"PRIMARY KEY, listPrice DECIMAL(10, 2)" +
 					", footage INT, nBeds TINYINT, nBaths TINYINT)");
 
-			st.execute("CREATE TABLE IF NOT EXISTS CUSTOMER(ID CHAR(9) " +
+			st.execute("CREATE TABLE IF NOT EXISTS CUSTOMER(ID INT " +
 					"PRIMARY KEY, name VARCHAR(100), phone CHAR(10))");
 
 			st.execute("CREATE TABLE IF NOT EXISTS APPOINTMENT(address " +

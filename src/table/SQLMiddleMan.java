@@ -86,21 +86,17 @@ public class SQLMiddleMan {
 		return false;
 	}
 
-	public boolean addCustomer(Customer cust) {
+	public String addCustomer(String name, String phone) {
 		try {
-			ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM CUSTOMER " +
-					"WHERE ID = " + cust.getID());
-			rs.first();
-			if (rs.getInt(1) == 0) {
-				st.execute(String.format("INSERT INTO CUSTOMER VALUES ('%s', " +
-						"'%s', '%s');", cust.getID(), cust.getName(), cust
-						.getPnumber()));
-				return true;
-			}
+				st.execute(String.format("INSERT INTO CUSTOMER (NAME, PHONE) VALUES (" +
+						"'%s', '%s');", name, phone ));
+				ResultSet rs = st.executeQuery("CALL SCOPE_IDENTITY()");
+				rs.first();
+				return rs.getString(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return null;
 	}
 
 	public boolean updateEmployee(Employee newEmp, Employee oldEmp) {
