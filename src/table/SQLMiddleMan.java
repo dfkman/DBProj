@@ -91,7 +91,7 @@ public class SQLMiddleMan {
 			rs.first();
 			while (!rs.isAfterLast()) {
 				data.add(new Property(rs.getString(1), rs.getString(2), rs
-						.getString(3), rs.getString(4), rs.getString(5),
+						.getString(4), rs.getString(3), rs.getString(5),
 						rs.getString(6)));
 				rs.next();
 			}
@@ -132,18 +132,11 @@ public class SQLMiddleMan {
 		return 5;
 	}
 	
-	public String addProperty(Property prop, boolean isHouse){
+	public String addProperty(Property prop){
 		try {
-			if(isHouse){
-			st.execute(String.format("INSERT INTO HOUSE (ADDR, LISTPRICE, sellerID, footage, nbeds, nbath) VALUES (" +
+			st.execute(String.format("INSERT INTO PROPERTY (ADDR, LISTPRICE, seller, footage, nbeds, nbath) VALUES (" +
 					"'%s', '%s','%s','%s','%s','%s');", prop.getAddr(), prop.getListP(),prop.getSeller(),
 					prop.getSqft(),prop.getNbed(),prop.getNbath()));
-			}
-			else{
-			st.execute(String.format("INSERT INTO LAND (ADDR, LISTPRICE, sellerID, footage) VALUES (" +
-					"'%s', '%s','%s','%s');", prop.getAddr(), prop.getListP(),prop.getSeller(),
-						prop.getSqft()));
-			}
 			ResultSet rs = st.executeQuery("CALL SCOPE_IDENTITY()");
 			rs.first();
 			return rs.getString(1);

@@ -36,7 +36,10 @@ public class TPController {
 	private Button Ba;
 
 	@FXML
-    private TableColumn TypeCol;
+	private TableView TabView;
+	
+	@FXML
+    private TableColumn SellerCol;
 
     @FXML
     private TableColumn AddrCol;
@@ -68,21 +71,22 @@ public class TPController {
 	
 	@FXML
 	private void initialize() throws IOException {
-        TypeCol.setCellValueFactory(new PropertyValueFactory<Property,
-                String>("Type"));
+        SellerCol.setCellValueFactory(new PropertyValueFactory<Property,
+                String>("Seller"));
         AddrCol.setCellValueFactory(new PropertyValueFactory<Property,
-                String>("Address"));
+                String>("Addr"));
         PriceCol.setCellValueFactory(new PropertyValueFactory<Property,
-                String>("Price"));
+                String>("listP"));
         SqFtCol.setCellValueFactory(new PropertyValueFactory<Property,
-                String>("Square Feet"));
+                String>("sqft"));
         BedCol.setCellValueFactory(new PropertyValueFactory<Property,
-                String>("Beds"));
+                String>("nbed"));
         BathCol.setCellValueFactory(new PropertyValueFactory<Property,
-                String>("Baths"));
+                String>("nbath"));
         ObservableList<Property> data = FXCollections.observableArrayList();
         mm.loadPropertyData(data);
-
+        TabView.setItems(data);
+        
 		Ba.setOnAction(event -> {
 			try {
 				model.swapScene('m');

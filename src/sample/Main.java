@@ -32,7 +32,8 @@ public class Main extends Application {
 			Connection conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/MarkDB",
 					"test", "test");
 			st = conn.createStatement();
-
+			
+			/*
 			st.execute("DROP TABLE IF EXISTS EMPLOYEE");
 			st.execute("DROP TABLE IF EXISTS LAND");
 			st.execute("DROP TABLE IF EXISTS HOUSE");
@@ -40,24 +41,27 @@ public class Main extends Application {
 			st.execute("DROP TABLE IF EXISTS CUSTOMER");
 			st.execute("DROP TABLE IF EXISTS APPOINTMENT");
 			st.execute("DROP TABLE IF EXISTS SALE");
+			*/
 
 			st.execute("CREATE TABLE IF NOT EXISTS EMPLOYEE(SSN CHAR(9) " +
 					"PRIMARY KEY, name VARCHAR(100), PHONE CHAR(10))");
-			st.execute("CREATE TABLE IF NOT EXISTS PROPERTY(ADDR VARCHAR" +
-					"(256) PRIMARY KEY, SELLER INT FOREIGN KEY REFERENCES CUSTOMER(ID), LISTPRICE DECIMAL(10," +
-					" 2), FOOTAGE INT, NBEDS TINYINT, NBATHS TINYINT)");
 			st.execute("CREATE TABLE IF NOT EXISTS CUSTOMER(ID INT " +
-					"PRIMARY KEY, name VARCHAR(100), phone CHAR(10))");
-
+					"PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100), phone CHAR(10))");
+			st.execute("CREATE TABLE IF NOT EXISTS PROPERTY(ADDR VARCHAR" +
+					"(256) PRIMARY KEY, SELLER INT, LISTPRICE DECIMAL(10," +
+					"2), FOOTAGE INT, NBEDS TINYINT, NBATHS TINYINT, FOREIGN KEY (SELLER) REFERENCES CUSTOMER(ID))");
 			st.execute("CREATE TABLE IF NOT EXISTS APPOINTMENT(address " +
-					"VARCHAR(256), cid CHAR(9), sTime " +
-					"TIME, eTime TIME, refNum INT, eSSN char(9), type char(6)" +
-					", PRIMARY KEY(address, cid))");
-
+					"VARCHAR(256), cid INT, sTime " +
+					"TIME, eTime TIME, refNum INT, eSSN char(9) "
+					+ ", PRIMARY KEY(address, cid), FOREIGN KEY (cid) REFERENCES CUSTOMER(ID),"
+					+ "FOREIGN KEY (eSSN) REFERENCES EMPLOYEE(SSN))");
 			st.execute("CREATE TABLE IF NOT EXISTS SALE(address VARCHAR(256)," +
-					" price DECIMAL(10, 2), sID INT, cID CHAR(9), eSSN CHAR" +
-					"(9), date DATETIME, refNum INT, PRIMARY KEY(ADDRESS, " +
-					"DATE))");
+					" price DECIMAL(10, 2), sID INT"
+					+ ", cID INT,"
+					+ " eSSN char(9), "
+					+ "date DATETIME, refNum INT, PRIMARY KEY(ADDRESS, " +
+					"DATE), FOREIGN KEY (cID) REFERENCES CUSTOMER(ID),"
+					+ "FOREIGN KEY (eSSN) REFERENCES EMPLOYEE(SSN))");
 			System.out.println("tables created successfully");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
