@@ -71,12 +71,14 @@ public class SQLMiddleMan {
 
 	public void loadPropertyData(ObservableList<Property> data) {
 		try {
-			ResultSet rs = st.executeQuery("SELECT * FROM LAND");
+			ResultSet rs = st.executeQuery("SELECT * FROM PROPERTY");
 			rs.first();
-
-
-
-
+			while (!rs.isAfterLast()) {
+				data.add(new Property(rs.getString(1), rs.getString(2), rs
+						.getString(3), rs.getString(4), rs.getString(5),
+						rs.getString(6)));
+				rs.next();
+			}
 		} catch(SQLException e) {
 			if (e.getMessage().contains("No data is available")) {
 				return;

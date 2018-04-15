@@ -81,7 +81,7 @@ public class TPController {
         BathCol.setCellValueFactory(new PropertyValueFactory<Property,
                 String>("Baths"));
         ObservableList<Property> data = FXCollections.observableArrayList();
-        mm.loadPropertyData();
+        mm.loadPropertyData(data);
 
 		Ba.setOnAction(event -> {
 			try {
