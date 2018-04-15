@@ -328,7 +328,11 @@ public class SQLMiddleMan {
 				rs.next();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			if (e.getMessage().contains("No data is available")) {
+			}
+			else {
+				e.printStackTrace();
+			}
 		}
 		return emp;
 	}

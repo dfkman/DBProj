@@ -139,7 +139,12 @@ public class TSController {
 			adddiag.getDialogPane().setContent(grid);
 			Platform.runLater(() -> date.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
-				if (dialogButton == savButtonType){
+				if (dialogButton == savButtonType) {
+					if (ref.getText().trim().isEmpty() || date.getText().trim
+							().isEmpty() || salep.getText().trim().isEmpty()) {
+						CTController.emptyInputAlert.showAndWait();
+						return null;
+					}
 					ArrayList<String> Result = new ArrayList<>();
 					Result.add((String) cust.getValue());
 					String sellerID = mm.getSellerID(proprt.getValue().toString());
@@ -199,6 +204,11 @@ public class TSController {
 			Platform.runLater(() -> date.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType){
+					if (ref.getText().trim().isEmpty() || date.getText().trim
+							().isEmpty() || salep.getText().trim().isEmpty()) {
+						CTController.emptyInputAlert.showAndWait();
+						return null;
+					}
 					ArrayList<String> Result = new ArrayList<>();
 					Result.add((String) cust.getValue());
 					int slash = cust.getValue().toString().indexOf("/");

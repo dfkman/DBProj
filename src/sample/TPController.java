@@ -149,6 +149,13 @@ public class TPController {
 				if (dialogButton == savButtonType) {
                     if (!((String) cust.getValue()).equalsIgnoreCase("Select a" +
                             " Customer...")) {
+                        if (addr.getText().trim().isEmpty() || sqft.getText()
+                                .trim().isEmpty() || listp.getText().trim()
+                                .isEmpty() || nbed.getText().trim().isEmpty()
+                                || nbath.getText().trim().isEmpty()) {
+                            CTController.emptyInputAlert.showAndWait();
+                            return null;
+                        }
                         ArrayList<String> Result = new ArrayList<>();
                         Result.add(addr.getText());
                         Result.add(sqft.getText());
@@ -218,21 +225,29 @@ public class TPController {
 			grid.add(new Label("Num of Baths"), 0, 7);
 			Platform.runLater(() -> addr.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
-				if (dialogButton == savButtonType){
-					if(!((String)cust.getValue()).equalsIgnoreCase("Select a Customer...")){
-					ArrayList<String> Result = new ArrayList<>();
-					Result.add(addr.getText());
-					Result.add(sqft.getText());
-					Result.add((cust.getValue().toString().substring(0, cust.getValue().toString().indexOf("/"))));
-					Result.add(nbed.getText());
-					Result.add(nbath.getText());
-					Result.add(listp.getText());
-					Property added = new Property(Result.get(0), Result.get(2),Result.get(1), Result.get(5), Result.get(3), Result.get(4));
-					data.add(added);
-					mm.addProperty(added);
-					return Result;
+				if (dialogButton == savButtonType) {
+					if(!((String)cust.getValue()).equalsIgnoreCase("Select a" +
+                            " Customer...")) {
+					    if (addr.getText().trim().isEmpty() || sqft.getText()
+                                .trim().isEmpty() || listp.getText().trim()
+                                .isEmpty() || nbed.getText().trim().isEmpty()
+                                || nbath.getText().trim().isEmpty()) {
+					        CTController.emptyInputAlert.showAndWait();
+					        return null;
+                        }
+                        ArrayList<String> Result = new ArrayList<>();
+                        Result.add(addr.getText());
+                        Result.add(sqft.getText());
+                        Result.add((cust.getValue().toString().substring(0, cust.getValue().toString().indexOf("/"))));
+                        Result.add(nbed.getText());
+                        Result.add(nbath.getText());
+                        Result.add(listp.getText());
+                        Property added = new Property(Result.get(0), Result.get(2),Result.get(1), Result.get(5), Result.get(3), Result.get(4));
+                        data.add(added);
+                        mm.addProperty(added);
+                        return Result;
 					}
-					else{
+					else {
 						Alert invalidCustomer = new Alert(Alert.AlertType.ERROR,
 								"Please select a customer", ButtonType.OK);
 						invalidCustomer.showAndWait();

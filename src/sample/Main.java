@@ -33,13 +33,13 @@ public class Main extends Application {
 					"test", "test");
 			st = conn.createStatement();
 			
-
+			/*
 			st.execute("DROP TABLE IF EXISTS EMPLOYEE");
 			st.execute("DROP TABLE IF EXISTS PROPERTY");
 			st.execute("DROP TABLE IF EXISTS CUSTOMER");
 			st.execute("DROP TABLE IF EXISTS APPOINTMENT");
 			st.execute("DROP TABLE IF EXISTS SALE");
-
+			*/
 
 			st.execute("CREATE TABLE IF NOT EXISTS EMPLOYEE(SSN CHAR(9) " +
 					"PRIMARY KEY, NAME VARCHAR(100), PHONE CHAR(10))");
