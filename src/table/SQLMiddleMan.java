@@ -37,6 +37,15 @@ public class SQLMiddleMan {
 			e.printStackTrace();
 		}
 	}
+	
+	public void deleteSale(Sale sale){
+		try {
+			st.execute(String.format("DELETE FROM SALE WHERE address = '%s' AND date = '%s'",
+					sale.getProp(),sale.getDate() ));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void deleteProperty(Property prop){
 		try {
@@ -84,6 +93,24 @@ public class SQLMiddleMan {
 			while (!rs.isAfterLast()) {
 				data.add(new Customer(rs.getString(1), rs.getString(2), rs
 						.getString(3)));
+				rs.next();
+			}
+		} catch (SQLException e) {
+			if (e.getMessage().contains("No data is available")) {
+				return;
+			}
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadSaleData(ObservableList<Sale> data) {
+		try {
+			ResultSet rs = st.executeQuery("SELECT * FROM SALE");
+			rs.first();
+			while (!rs.isAfterLast()) {
+				data.add(new Sale(rs.getString(5), rs.getString(4), rs
+						.getString(3),rs.getString(1),rs.getString(7),
+						rs.getString(6),rs.getString(2)));
 				rs.next();
 			}
 		} catch (SQLException e) {
@@ -168,6 +195,19 @@ public class SQLMiddleMan {
 			return null;
 		}
 	}
+	
+	public void addSale(Sale sale){
+		try {
+			st.execute(String.format("INSERT INTO SALE (ADDRESS, PRICE, sID, CID, ESSN, DATE, REFNUM) VALUES (" +
+					"'%s', %s,%s,%s,'%s','%s', %s);", sale.getProp(), sale.getPrice(),sale.getSeller(),
+					sale.getBuyer(),sale.getEmp(),sale.getDate(),sale.getRefNum()));
+			ResultSet rs = st.executeQuery("CALL SCOPE_IDENTITY()");
+			rs.first();
+			return;
+	} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
 	public int updateEmployee(Employee newEmp, Employee oldEmp) {
 		try {
@@ -247,6 +287,19 @@ public class SQLMiddleMan {
 	}
 	}
 	
+	public void updateSale(Sale old, Sale update){
+		try {
+			st.execute(String.format("UPDATE SALE SET " +
+			"address = '%s', cid = %s, sid = %s,  essn = '%s',"
+			+ "date = '%s', refnum = %s WHERE ADDRESS = '%s' AND DATE = '%s'",
+			update.getProp(),update.getBuyer(),update.getSeller(),update.getEmp(),
+			update.getDate(), update.getRefNum(),old.getProp(), old.getDate()));
+			return;
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	}
+	
 	//Loads the customer names/ids
 	public ObservableList<String> loadCust() {
 		ObservableList<String> cust = FXCollections.observableArrayList();
@@ -284,7 +337,7 @@ public class SQLMiddleMan {
 		ObservableList<String> prop= FXCollections.observableArrayList();
 		prop.add("Select a Property...");
 		try {
-			ResultSet rs = st.executeQuery("(SELECT addr FROM LAND) UNION (SELECT addr FROM HOUSE)");
+			ResultSet rs = st.executeQuery("SELECT Addr from PROPERTY");
 			rs.first();
 			while (!rs.isAfterLast()) {
 				prop.add(rs.getString(1));
@@ -295,4 +348,15 @@ public class SQLMiddleMan {
 		}
 		return prop;
 	}
+	public String getSellerID(String addr){
+		try {
+			ResultSet rs = st.executeQuery(String.format("SELECT SELLER FROM PROPERTY WHERE ADDR = '%s'",addr));
+			rs.first();
+			return rs.getString(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }
