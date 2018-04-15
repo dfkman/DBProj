@@ -136,7 +136,9 @@ public class TPController {
 					Result.add(nbed.getText());
 					Result.add(nbath.getText());
 					Result.add(listp.getText());
-					data.add(new Property(Result.get(0), Result.get(2),Result.get(1), Result.get(5), Result.get(3), Result.get(4)));
+					Property added = new Property(Result.get(0), Result.get(2),Result.get(1), Result.get(5), Result.get(3), Result.get(4));
+					data.add(added);
+					mm.addProperty(added);
 					return Result;
 					}
 					else{

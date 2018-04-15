@@ -134,13 +134,14 @@ public class SQLMiddleMan {
 	
 	public String addProperty(Property prop){
 		try {
-			st.execute(String.format("INSERT INTO PROPERTY (ADDR, LISTPRICE, seller, footage, nbeds, nbath) VALUES (" +
+			st.execute(String.format("INSERT INTO PROPERTY (ADDR, LISTPRICE, seller, footage, nbeds, nbaths) VALUES (" +
 					"'%s', '%s','%s','%s','%s','%s');", prop.getAddr(), prop.getListP(),prop.getSeller(),
 					prop.getSqft(),prop.getNbed(),prop.getNbath()));
 			ResultSet rs = st.executeQuery("CALL SCOPE_IDENTITY()");
 			rs.first();
 			return rs.getString(1);
 	} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			return null;
 		}
 	}
