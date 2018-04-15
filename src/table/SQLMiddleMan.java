@@ -31,7 +31,7 @@ public class SQLMiddleMan {
 
 	public void deleteCustomer(Customer cust) {
 		try {
-			st.execute(String.format("DELETE FROM EMPLOYEE WHERE SSN = '%s'",
+			st.execute(String.format("DELETE FROM CUSTOMER WHERE ID = '%s'",
 					cust.getID()));
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -119,6 +119,7 @@ public class SQLMiddleMan {
 		return 5;
 	}
 
+/*
 	public int addCustomer(Customer cust) {
 		try {
 			ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM CUSTOMER " +
@@ -146,6 +147,18 @@ public class SQLMiddleMan {
 			e.printStackTrace();
 		}
 		return 5;
+*/
+
+	public String addCustomer(String name, String phone) {
+		try {
+				st.execute(String.format("INSERT INTO CUSTOMER (NAME, PHONE) VALUES (" +
+						"'%s', '%s');", name, phone ));
+				ResultSet rs = st.executeQuery("CALL SCOPE_IDENTITY()");
+				rs.first();
+				return rs.getString(1);
+		} catch (SQLException e) {
+			return null;
+		}
 	}
 
 	public int updateEmployee(Employee newEmp, Employee oldEmp) {

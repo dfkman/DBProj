@@ -112,14 +112,10 @@ public class CTController {
 			grid.setHgap(10);
 			grid.setVgap(10);
 			grid.setPadding(new Insets(20, 150, 10, 10));
-			TextField id = new TextField();
-			id.setPromptText("customer ID");
 			TextField name = new TextField();
 			name.setPromptText("name");
 			TextField phone = new TextField();
 			phone.setPromptText("phone");
-			grid.add(new Label("ID"), 0, 0);
-			grid.add(id, 1, 0);
 			grid.add(new Label("Name:"), 0, 1);
 			grid.add(name, 1, 1);
 			grid.add(new Label("Phone:"), 0, 2);
@@ -129,34 +125,22 @@ public class CTController {
 			adddiag.setResultConverter(dialogButton -> {
 				if (dialogButton == savButtonType){
 					ArrayList<String> Result = new ArrayList<>();
-					Result.add(id.getText());
 					Result.add(name.getText());
 					Result.add(phone.getText());
-					int ret = mm.addCustomer(new Customer(id.getText(), name
-							.getText(), phone.getText()));
-					switch (ret) {
-						case 0:
-							return Result;
-						case 1:
-							phoneTooLongAlert.showAndWait();
-							break;
-						case 2:
-							nameTooLongAlert.showAndWait();
-							break;
-						case 3:
-							idExistsAlert.showAndWait();
-							break;
-						default:
-							breakAlert.showAndWait();
-							break;
+					String id = mm.addCustomer(name.getText(), phone.getText());
+					if (id == null) {
+						idExistsAlert.showAndWait();
+						return null;
 					}
+					Result.add(id);
+					return Result;
 				}
 				return null;
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
 			if (newEntry != null) {
-				data.add(new Customer(newEntry.get().get(0), newEntry.get()
-						.get(1), newEntry.get().get(2)));
+				data.add(new Customer(newEntry.get().get(2), newEntry.get()
+						.get(0), newEntry.get().get(1)));
 			}
 		});
 
