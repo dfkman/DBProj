@@ -9,7 +9,6 @@ public class Appointment {
 	private SimpleStringProperty refnum;
 	private SimpleStringProperty sdate;
 	private SimpleStringProperty edate;
-	boolean isEdited;
 	
 	public Appointment(String emp, String buy, String prop, String
 			ref, String sdate, String edate) {
@@ -19,12 +18,8 @@ public class Appointment {
 		this.refnum = new SimpleStringProperty(ref);
 		this.sdate = new SimpleStringProperty(sdate);
 		this.edate = new SimpleStringProperty(edate);
-		this.isEdited = false;
 	}
-	public void saveToTable() {
-		//save function for going back to sql
-		isEdited = false;
-	}
+
 	public void setEmployee(String newValue){
 		employee.set(newValue);
 	}

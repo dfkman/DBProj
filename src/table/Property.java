@@ -8,7 +8,6 @@ public class Property {
 	private SimpleStringProperty listP;
 	private SimpleStringProperty nbed;
 	private SimpleStringProperty nbath;
-	private boolean isEdited; 
 
 	public Property(String addr, String seller, String sqft, String listing, String bed, String bath) {
 		this.addr = new SimpleStringProperty(addr);
@@ -17,12 +16,6 @@ public class Property {
 		this.listP = new SimpleStringProperty(listing);
 		this.nbed = new SimpleStringProperty(bed);
 		this.nbath = new SimpleStringProperty(bath);
-		isEdited = false;
-	}
-	
-	public void saveToTable() {
-		//save function for going back to sql
-		isEdited = false;
 	}
 
 	public String getAddr(){
@@ -61,5 +54,5 @@ public class Property {
 	public void setNbath(String newVal){
 		nbath.set(newVal);
 	}
-	
+
 }

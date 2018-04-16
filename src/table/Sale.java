@@ -11,7 +11,6 @@ public class Sale {
 	private SimpleStringProperty refnum;
 	private SimpleStringProperty date;
 	private SimpleStringProperty price;
-	boolean isEdited;
 	
 	public Sale(String emp, String buy, String seller, String prop, String ref,
 				String date, String price) {
@@ -22,13 +21,8 @@ public class Sale {
 		this.refnum = new SimpleStringProperty(ref);
 		this.date = new SimpleStringProperty(date);
 		this.price = new SimpleStringProperty(price);
-		this.isEdited = false;
 	}
-	
-	public void saveToTable() {
-		//save function for going back to sql
-		isEdited = false;
-	}
+
 	public String getEmp(){
 		return emp.get();
 	}

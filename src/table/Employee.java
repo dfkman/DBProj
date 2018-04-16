@@ -6,21 +6,15 @@ public class Employee {
 	private final SimpleStringProperty SSN;
 	private SimpleStringProperty pnumber;
 	private SimpleStringProperty name;
-	private boolean isEdited;
 	
 	public Employee(String SSN, String name , String phone) {
 		this.name = new SimpleStringProperty(name);
 		this.SSN = new SimpleStringProperty(SSN);
 		this.pnumber = new SimpleStringProperty(phone);
-		isEdited = false;
 	}
 	
 	//Setters and getters
-	
-	public void saveToTable() {
-		//save function for going back to sql
-		isEdited = false;
-	}
+
 	public String getName(){
 		return name.get();
 	}
