@@ -70,12 +70,16 @@ public class CTController {
 	private final Alert phoneTooLongAlert = new Alert(Alert.AlertType.ERROR,
 			"You entered to long of a phone number. 10 max.", ButtonType.OK);
 
-	private final Alert breakAlert = new Alert(Alert.AlertType.ERROR,
-			"You found an unconsidered error. Congratulations",
+	public static final Alert breakAlert = new Alert(Alert.AlertType.ERROR,
+			"You caught an error. Check the terminal for more details",
 			ButtonType.OK);
 
 	public static final Alert emptyInputAlert = new Alert(Alert.AlertType
 			.ERROR, "All fields must contain useful values", ButtonType.OK);
+
+	public static final Alert RefIntegAlert = new Alert(Alert.AlertType
+			.ERROR, "Referential integrety constraint violation", ButtonType
+			.OK);
 
 	public CTController(Main mod, SQLMiddleMan mm) {
 		model = mod;
@@ -183,7 +187,7 @@ public class CTController {
 				adddiag.setResultConverter(dialogButton -> {
 					if (dialogButton == savButtonType) {
 						if (name.getText().trim().isEmpty() || phone.getText()
-								.trim().isEmpty()) {
+								.trim().isEmpty() || id.getText().trim().isEmpty()) {
 							emptyInputAlert.showAndWait();
 							return null;
 						}
@@ -229,8 +233,18 @@ public class CTController {
 			Customer cust = (Customer)TabView.getSelectionModel()
 					.getSelectedItem();
 			if (cust != null) {
-				mm.deleteCustomer(cust);
-				data.remove(cust);
+				int error = mm.deleteCustomer(cust);
+				switch (error) {
+					case 0:
+						data.remove(cust);
+						break;
+					case 1:
+						RefIntegAlert.showAndWait();
+						break;
+					default:
+						breakAlert.showAndWait();
+						break;
+				}
 			}
 		});
 	}

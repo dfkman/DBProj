@@ -90,11 +90,9 @@ public class TSController {
 		mm.loadSaleData(data);
 		TabView.setItems(data);
 		Ba.setOnAction(event ->{
-			try
-			{
+			try {
 				model.swapScene('m');
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -237,8 +235,18 @@ public class TSController {
 			Sale sale = (Sale)TabView.getSelectionModel()
 					.getSelectedItem();
 			if (sale != null) {
-				mm.deleteSale(sale);
-				data.remove(sale);
+				int error = mm.deleteSale(sale);
+				switch (error) {
+					case 0:
+						data.remove(sale);
+						break;
+					case 1:
+						CTController.RefIntegAlert.showAndWait();
+						break;
+					default:
+						CTController.breakAlert.showAndWait();
+						break;
+				}
 			}
 		});
 	}

@@ -238,8 +238,18 @@ public class TEController {
 		Del.setOnAction(event ->{
 			Employee emp = (Employee) TabView.getSelectionModel().getSelectedItem();
 			if (emp != null){
-				mm.deleteEmployee(emp);
-				data.remove(emp);
+				int error = mm.deleteEmployee(emp);
+				switch (error) {
+					case 0:
+						data.remove(emp);
+						break;
+					case 1:
+						CTController.RefIntegAlert.showAndWait();
+						break;
+					default:
+						CTController.breakAlert.showAndWait();
+						break;
+				}
 			}
 		});
 	}

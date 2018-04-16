@@ -16,54 +16,82 @@ public class SQLMiddleMan {
 	private static final String PRIMARY_KEY_VIOLATION =
 			"Unique index or primary key violation";
 
+	private static final String REF_INTEG_VIOLATION = "Referential integrity " +
+			"constraint violation";
+
 	public SQLMiddleMan(Statement st) {
 		this.st = st;
 	}
 
-	public void deleteEmployee(Employee emp) {
+	public int deleteEmployee(Employee emp) {
 		try {
 			st.execute("DELETE FROM EMPLOYEE WHERE SSN = \'" + emp.getSSN() +
 					"\'");
+			return 0;
 		} catch (SQLException e) {
+			if (e.getMessage().contains(REF_INTEG_VIOLATION)) {
+				return 1;
+			}
 			e.printStackTrace();
 		}
+		return 2;
 	}
 
-	public void deleteCustomer(Customer cust) {
+	public int deleteCustomer(Customer cust) {
 		try {
 			st.execute(String.format("DELETE FROM CUSTOMER WHERE ID = '%s'",
 					cust.getID()));
+			return 0;
 		} catch (SQLException e) {
+			if (e.getMessage().contains(REF_INTEG_VIOLATION)) {
+				return 1;
+			}
 			e.printStackTrace();
 		}
+		return 2;
 	}
 	
-	public void deleteSale(Sale sale){
+	public int deleteSale(Sale sale){
 		try {
 			st.execute(String.format("DELETE FROM SALE WHERE address = '%s' AND date = '%s'",
-					sale.getProp(),sale.getDate() ));
+					sale.getProp(),sale.getDate()));
+			return 0;
 		} catch (SQLException e) {
+			if (e.getMessage().contains(REF_INTEG_VIOLATION)) {
+				return 1;
+			}
 			e.printStackTrace();
 		}
+		return 2;
 	}
 
-	public void deleteProperty(Property prop){
+	public int deleteProperty(Property prop){
 		try {
 			st.execute(String.format("DELETE FROM Property WHERE addr = '%s'",
 					prop.getAddr()));
+			return 0;
 		} catch (SQLException e) {
+			if (e.getMessage().contains(REF_INTEG_VIOLATION)) {
+				return 1;
+			}
 			e.printStackTrace();
 		}
+		return 2;
 	}
 	
-	public void deleteAppointment(Appointment apt){
+	public int deleteAppointment(Appointment apt){
 		try {
 			st.execute(String.format("DELETE FROM Appointment WHERE address = '%s' AND "
 					+ "cid = %s AND ESSN = '%s'",
 					apt.getProperty(),apt.getBuyer(),apt.getEmployee()));
+			return 0;
 		} catch (SQLException e) {
+			if (e.getMessage().contains(REF_INTEG_VIOLATION)) {
+				return 1;
+			}
 			e.printStackTrace();
 		}
+		return 2;
 	}
 	
 	public void loadEmpData(ObservableList<Employee> data) {
@@ -246,7 +274,7 @@ public class SQLMiddleMan {
 			rs.first();
 			return;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

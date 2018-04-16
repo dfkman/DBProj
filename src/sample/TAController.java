@@ -136,7 +136,13 @@ public class TAController {
 			adddiag.getDialogPane().setContent(grid);
 			Platform.runLater(() -> start.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
-				if (dialogButton == savButtonType){
+				if (dialogButton == savButtonType) {
+					if (start.getText().trim().isEmpty() || end.getText()
+							.trim().isEmpty() || ref.getText().trim().isEmpty
+							()) {
+						CTController.emptyInputAlert.showAndWait();
+						return null;
+					}
 					ArrayList<String> Result = new ArrayList<>();
 					int slash = cust.getValue().toString().indexOf("/");
 					if(slash < 0)
@@ -199,7 +205,13 @@ public class TAController {
 			adddiag.getDialogPane().setContent(grid);
 			Platform.runLater(() -> start.requestFocus());
 			adddiag.setResultConverter(dialogButton -> {
-				if (dialogButton == savButtonType){
+				if (dialogButton == savButtonType) {
+					if (start.getText().trim().isEmpty() || end.getText()
+							.trim().isEmpty() || ref.getText().trim().isEmpty
+							()) {
+						CTController.emptyInputAlert.showAndWait();
+						return null;
+					}
 					ArrayList<String> Result = new ArrayList<>();
 					int slash = cust.getValue().toString().indexOf("/");
 					if(slash < 0)
@@ -223,9 +235,19 @@ public class TAController {
 		});
 		del.setOnAction(event -> {
 			Appointment apt = (Appointment)TabView.getSelectionModel().getSelectedItem();
-			if (apt != null){
-				mm.deleteAppointment(apt);
-				data.remove(apt);
+			if (apt != null) {
+				int error = mm.deleteAppointment(apt);
+				switch (error) {
+					case 0:
+						data.remove(apt);
+						break;
+					case 1:
+						CTController.RefIntegAlert.showAndWait();
+						break;
+					default:
+						CTController.breakAlert.showAndWait();
+						break;
+				}
 			}
 		});
 	}

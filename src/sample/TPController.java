@@ -94,15 +94,6 @@ public class TPController {
 			}
 		});
 		
-		Del.setOnAction(event -> {
-			Property prop = (Property)TabView.getSelectionModel()
-					.getSelectedItem();
-			if (prop != null) {
-				mm.deleteProperty(prop);
-				data.remove(prop);
-			}
-		});
-		
 		Edit.setOnAction(event -> {
 			Property prop = (Property) TabView.getSelectionModel().
 					getSelectedItem();
@@ -258,5 +249,24 @@ public class TPController {
 			});
 			Optional<ArrayList<String>> newEntry = adddiag.showAndWait();
 		});
+
+        Del.setOnAction(event -> {
+            Property prop = (Property)TabView.getSelectionModel()
+                    .getSelectedItem();
+            if (prop != null) {
+                int error = mm.deleteProperty(prop);
+                switch (error) {
+                    case 0:
+                        data.remove(prop);
+                        break;
+                    case 1:
+                        CTController.RefIntegAlert.showAndWait();
+                        break;
+                    default:
+                        CTController.breakAlert.showAndWait();
+                        break;
+                }
+            }
+        });
 	}
 }
