@@ -67,10 +67,6 @@ public class TEController {
 
 	private final Alert phoneTooLongAlert = new Alert(Alert.AlertType.ERROR,
 			"You entered to long of a phone number. 10 max.", ButtonType.OK);
-
-	private final Alert breakAlert = new Alert(Alert.AlertType.ERROR,
-			"You found an unconsidered error. Congratulations",
-			ButtonType.OK);
 	
 	
 	public TEController(Main mod, SQLMiddleMan mm) {
@@ -150,7 +146,7 @@ public class TEController {
 							ssnExistsAlert.showAndWait();
 							break;
 						default:
-							breakAlert.showAndWait();
+							CTController.breakAlert.showAndWait();
 							break;
 					}
 				}
@@ -219,7 +215,7 @@ public class TEController {
 									ssnExistsAlert.showAndWait();
 									break;
 								default:
-									breakAlert.showAndWait();
+									CTController.breakAlert.showAndWait();
 									break;
 							}
 							emp.setSSN(oldEmp.getSSN());
