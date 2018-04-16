@@ -13,8 +13,8 @@ public class SQLMiddleMan {
 
 	private Statement st;
 
-	private static final String PRIMARY_KEY_VIOLATION = "Unique index or " +
-			"primary key violation";
+	private static final String PRIMARY_KEY_VIOLATION =
+			"Unique index or primary key violation";
 
 	public SQLMiddleMan(Statement st) {
 		this.st = st;
@@ -204,7 +204,7 @@ public class SQLMiddleMan {
 			ResultSet rs = st.executeQuery("CALL SCOPE_IDENTITY()");
 			rs.first();
 			return rs.getString(1);
-	} catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
 		}
@@ -232,7 +232,7 @@ public class SQLMiddleMan {
 			ResultSet rs = st.executeQuery("CALL SCOPE_IDENTITY()");
 			rs.first();
 			return;
-	} catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -245,7 +245,7 @@ public class SQLMiddleMan {
 			ResultSet rs = st.executeQuery("CALL SCOPE_IDENTITY()");
 			rs.first();
 			return;
-	} catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -323,9 +323,9 @@ public class SQLMiddleMan {
 			update.getAddr(),update.getSeller(),update.getListP(),update.getSqft(),
 			update.getNbed(), update.getNbath(),old.getAddr()));
 			return;
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void updateSale(Sale old, Sale update){
@@ -336,9 +336,9 @@ public class SQLMiddleMan {
 			update.getProp(),update.getBuyer(),update.getSeller(),update.getEmp(),
 			update.getDate(), update.getRefNum(),old.getProp(), old.getDate()));
 			return;
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void updateApt(Appointment old, Appointment update){
@@ -351,9 +351,9 @@ public class SQLMiddleMan {
 			update.getEnd(), update.getRefnum(),old.getProperty(), old.getBuyer(),
 			old.getEmployee()));
 			return;
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//Loads the customer names/ids
@@ -408,6 +408,7 @@ public class SQLMiddleMan {
 		}
 		return prop;
 	}
+
 	public String getSellerID(String addr){
 		try {
 			ResultSet rs = st.executeQuery(String.format("SELECT SELLER FROM PROPERTY WHERE ADDR = '%s'",addr));
@@ -418,5 +419,4 @@ public class SQLMiddleMan {
 		}
 		return null;
 	}
-	
 }
