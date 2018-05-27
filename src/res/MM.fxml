@@ -1,26 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.layout.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
 
-<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" spacing="30.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="375.0" prefWidth="154.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Property Manager" wrappingWidth="151.84619140625" />
-            <VBox prefHeight="134.0" prefWidth="154.0">
-               <children>
-                  <Button fx:id="Emp" mnemonicParsing="false" prefHeight="31.0" prefWidth="116.0" text="Employees" />
-                  <Button fx:id="Cust" lineSpacing="10.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="117.0" text="Customers" />
-                  <Button fx:id="Prop" mnemonicParsing="false" prefHeight="31.0" prefWidth="111.0" text="Properties" />
-                  <Button fx:id="Sale" mnemonicParsing="false" prefHeight="31.0" prefWidth="114.0" text="Sales" />
-                  <Button fx:id="Apt" mnemonicParsing="false" prefHeight="31.0" prefWidth="128.0" text="Appointments" />
-                  <Button fx:id="Exit" mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" text="Exit" />
-               </children>
-            </VBox>
-         </children>
-      </VBox>
+      <Button fx:id="Emp" mnemonicParsing="false" text="Employees" />
+      <Button fx:id="Cust" mnemonicParsing="false" text="Customers" />
+      <Button fx:id="Prop" mnemonicParsing="false" text="Properties" />
+      <Button fx:id="Sale" mnemonicParsing="false" text="Sales" />
+      <Button fx:id="Apt" mnemonicParsing="false" text="Appointments" />
+      <Button fx:id="Exit" mnemonicParsing="false" text="Exit" />
    </children>
-</FlowPane>
+</VBox>
