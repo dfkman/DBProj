@@ -1,4 +1,4 @@
-# Fupa Troopas Real Estate Company
+# Real Estate Company
 
 This is a team project for CSCI 320 at the Rochester Institute of Technology.
 
